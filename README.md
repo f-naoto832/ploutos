@@ -8,3 +8,8 @@ This is Concentration card game.
 
 Vue.js
 
+## Project
+
+`vue-typescript-sample` is target project, deploy with netlify.
+
+`test-site & vue-ts-practice` is sample code directory.

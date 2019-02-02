@@ -5,7 +5,7 @@
       <router-link to="/about">About</router-link> |
       <router-link to="/hahnah">Hahnah</router-link> |
       <router-link to="/hayamizu">shaya</router-link> |
-      <router-link to="/hayamizu">fnaoto</router-link>
+      <router-link to="/fnaoto">fnaoto</router-link>
     </div>
     <router-view/>
   </div>

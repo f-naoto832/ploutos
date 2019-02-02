@@ -10,6 +10,6 @@ Vue.js
 
 ## Project
 
-`vue-typescript-sample` is target project, deploy with netlify.
+`vue-ts-practice` is target project, deploy with netlify.
 
-`test-site & vue-ts-practice` is sample code directory.
+`test-site & vue-typescript-sample` is sample code directory.

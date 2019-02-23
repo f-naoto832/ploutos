@@ -28,7 +28,11 @@ export default new Vuex.Store({
     scene: Scene.preparing,
   },
   mutations: {
-
+    increment(state) {
+      // ここで状態を更新する
+      // state.xxx = yyy;
+      const a = 1;
+    },
   },
   actions: {
 

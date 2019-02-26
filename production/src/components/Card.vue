@@ -1,10 +1,10 @@
 <template>
   <div class="card">
-    <div id="card-front">
+    <div id="card-front" v-if="isFrontShow">
       <h1>{{ number }}</h1>
     </div>
-    <div id="card-back">
-
+    <div id="card-back" v-if="isBackShow">
+      back
     </div>
   </div>
 </template>
@@ -17,6 +17,8 @@ import { CardOrientation } from '../store';
 export default class Card extends Vue {
   @Prop() private number!: number;
   @Prop() private orientation!: CardOrientation;
+  private isFrontShow: boolean = this.orientation === CardOrientation.front;
+  private isBackShow: boolean = this.orientation === CardOrientation.back;
 }
 </script>
 

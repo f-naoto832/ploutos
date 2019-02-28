@@ -1,19 +1,32 @@
 <template>
   <div id="app">
+    <TurnCounter />
+    <button v-on:click="onClickNext">Next(ターン経過の動作確認用ボタン)</button>
     <Card number=1 />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import store from './store';
+import TurnCounter from './components/TurnCounter.vue';
 import Card from './components/Card.vue';
 
 @Component({
   components: {
+    TurnCounter,
     Card,
   },
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+
+  $store
+
+  // 動作確認用関数
+  onClickNext() {
+    store.commit('incrementTurnCount');
+  }
+}
 </script>
 
 <style>

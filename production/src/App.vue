@@ -19,9 +19,6 @@ import Card from './components/Card.vue';
   },
 })
 export default class App extends Vue {
-
-  $store
-
   // 動作確認用関数
   onClickNext() {
     store.commit('incrementTurnCount');

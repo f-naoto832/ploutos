@@ -26,13 +26,20 @@ export default new Vuex.Store({
     gainCardsFieldOfPlayer1: null,
     gainCardsFieldOfPlayer2: null,
     turnPlayer: Player.player1,
-    counter: 0,
+    turnCount: 0,
     openedCards: 0,
     isPrivilegeAvailable: true,
     scene: Scene.preparing,
   },
   mutations: {
-
+    increment(state) {
+      // ここで状態を更新する
+      // state.xxx = yyy;
+      const a = 1;
+    },
+    incrementTurnCount(state) {
+      state.turnCount++;
+    },
   },
   actions: {
 

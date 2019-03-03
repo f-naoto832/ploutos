@@ -13,6 +13,10 @@ export enum Scene {
   playing,
   finish,
 }
+export enum CardOrientation {
+  front,
+  back,
+}
 
 export default new Vuex.Store({
   state: {

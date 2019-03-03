@@ -27,8 +27,8 @@ export default class PersonalCardsField extends Vue {
 <style scoped>
 .personalCardsField {
   position: relative;
-  width: 80rem;
-  height: 12rem;
+  width: 60%;
+  height: 13rem;
   margin-left: 20%;
   text-align: center;
   background-color: lightgoldenrodyellow;

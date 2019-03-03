@@ -1,19 +1,32 @@
 <template>
   <div class="personalCardsField">
+    <Card number=1 v-bind:orientation="orientation"/>
+    <Card number=2 v-bind:orientation="orientation"/>
+    <Card number=3 v-bind:orientation="orientation"/>
+    <Card number=4 v-bind:orientation="orientation"/>
+    <Card number=5 v-bind:orientation="orientation"/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
+import Card from './Card.vue';
+import { CardOrientation } from '../store';
 
-@Component
-export default class PersonalCardsField extends Vue {}
+@Component({
+  components: {
+    Card,
+  },
+})
+export default class PersonalCardsField extends Vue {
+    private orientation: CardOrientation = CardOrientation.back;
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .personalCardsField {
-  position: absolute;
+  position: relative;
   width: 80rem;
   height: 12rem;
   margin-left: 20%;

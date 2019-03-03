@@ -1,11 +1,6 @@
 <template>
   <div id="app">
     <PersonalCardsField/>
-    <Card number=1 v-bind:orientation="orientation"/>
-    <Card number=2 v-bind:orientation="orientation"/>
-    <Card number=3 v-bind:orientation="orientation"/>
-    <Card number=4 v-bind:orientation="orientation"/>
-    <Card number=5 v-bind:orientation="orientation"/>
     <TurnCounter />
     <button v-on:click="onClickNext">Next(ターン経過の動作確認用ボタン)</button>
   </div>

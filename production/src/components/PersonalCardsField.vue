@@ -14,13 +14,10 @@ export default class PersonalCardsField extends Vue {}
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .personalCardsField {
-  position: relative;
-  display: inline-block;
-  width:auto;
-  height:auto;
-  margin: 0.2rem;
-  transition: all 0.2s ease;
-  border: 3px solid #000000;
+  position: absolute;
+  width: 80%;
+  height: 20rem;
+  text-align: center;
 }
 img {
   width:auto;

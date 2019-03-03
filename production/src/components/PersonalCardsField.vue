@@ -1,6 +1,5 @@
 <template>
   <div class="personalCardsField">
-    <img id="personal-cards-field" src="../assets/personal-cards-field.png">
   </div>
 </template>
 
@@ -15,14 +14,10 @@ export default class PersonalCardsField extends Vue {}
 <style scoped>
 .personalCardsField {
   position: absolute;
-  width: 80%;
-  height: 20rem;
+  width: 80rem;
+  height: 12rem;
+  margin-left: 20%;
   text-align: center;
-}
-img {
-  width:auto;
-  height:auto;
-  max-width:100%;
-  max-height:100%;
+  background-color: lightgoldenrodyellow;
 }
 </style>

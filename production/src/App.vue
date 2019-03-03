@@ -1,19 +1,23 @@
 <template>
   <div id="app">
-    <Card number=1 />
+    <Card number=1 v-bind:orientation="orientation"/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import Card from './components/Card.vue';
+import { CardOrientation } from './store';
 
 @Component({
   components: {
     Card,
   },
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  // 確認用
+  private orientation: CardOrientation = CardOrientation.back;
+}
 </script>
 
 <style>

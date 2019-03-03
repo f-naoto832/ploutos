@@ -4,7 +4,7 @@
       <h1>{{ number }}</h1>
     </div>
     <div id="card-back" v-if="isBackShow">
-      back
+      <img id="card-design" src="../assets/card-back.jpg">
     </div>
   </div>
 </template>
@@ -24,4 +24,19 @@ export default class Card extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.card {
+  position: relative;
+  display: inline-block;
+  width: 8rem;
+  height: 12rem;
+  margin: 0.2rem;
+  transition: all 0.2s ease;
+  border: 3px solid #176123;
+}
+img {
+  width:auto;
+  height:auto;
+  max-width:100%;
+  max-height:100%;
+}
 </style>

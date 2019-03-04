@@ -1,5 +1,6 @@
 <template>
   <div class="personalCardsField">
+    <GainCardsField />
     <Card number=1 v-bind:orientation="orientation"/>
     <Card number=2 v-bind:orientation="orientation"/>
     <Card number=3 v-bind:orientation="orientation"/>
@@ -11,11 +12,13 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
 import Card from './Card.vue';
+import GainCardsField from './GainCardsField.vue';
 import { CardOrientation } from '../store';
 
 @Component({
   components: {
     Card,
+    GainCardsField,
   },
 })
 export default class PersonalCardsField extends Vue {

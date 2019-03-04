@@ -3,6 +3,7 @@
     <PersonalCardsField/>
     <TurnCounter />
     <button v-on:click="onClickNext">Next(ターン経過の動作確認用ボタン)</button>
+    <ReplayButton />
   </div>
 </template>
 
@@ -12,6 +13,7 @@ import store from './store';
 import TurnCounter from './components/TurnCounter.vue';
 import Card from './components/Card.vue';
 import PersonalCardsField from './components/PersonalCardsField.vue';
+import ReplayButton from './components/ReplayButton.vue';
 import { CardOrientation } from './store';
 
 @Component({
@@ -19,6 +21,7 @@ import { CardOrientation } from './store';
     TurnCounter,
     Card,
     PersonalCardsField,
+    ReplayButton,
   },
 })
 export default class App extends Vue {

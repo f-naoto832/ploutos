@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Card number=1 v-bind:orientation="orientation"/>
+    <PersonalCardsField/>
     <TurnCounter />
     <button v-on:click="onClickNext">Next(ターン経過の動作確認用ボタン)</button>
   </div>
@@ -11,12 +11,14 @@ import { Component, Vue } from 'vue-property-decorator';
 import store from './store';
 import TurnCounter from './components/TurnCounter.vue';
 import Card from './components/Card.vue';
+import PersonalCardsField from './components/PersonalCardsField.vue';
 import { CardOrientation } from './store';
 
 @Component({
   components: {
     TurnCounter,
     Card,
+    PersonalCardsField,
   },
 })
 export default class App extends Vue {

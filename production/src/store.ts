@@ -25,6 +25,8 @@ export default new Vuex.Store({
     commonCardsField: null,
     gainCardsFieldOfPlayer1: null,
     gainCardsFieldOfPlayer2: null,
+    gainCardsNumberOfPlayer1: 0,
+    gainCardsNumberOfPlayer2: 0,
     turnPlayer: Player.player1,
     turnCount: 0,
     openedCards: 0,
@@ -39,6 +41,12 @@ export default new Vuex.Store({
     },
     incrementTurnCount(state) {
       state.turnCount++;
+    },
+    incrementGainCardsNumberOfPlayer1(state) {
+      state.gainCardsNumberOfPlayer1++;
+    },
+    incrementGainCardsNumberOfPlayer2(state) {
+      state.gainCardsNumberOfPlayer2++;
     },
   },
   actions: {

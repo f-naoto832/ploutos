@@ -1,12 +1,10 @@
 <template>
   <div class="gainCardsField">
     <div id="number-of-cards-player1" v-if="isPlayer1">
-      <h1>{{ this.$store.state.gainCardsNumberOfPlayer1 }}</h1>
-      <h1>sheets</h1>
+      <h1>{{ this.$store.state.gainCardsOfPlayer1 }}</h1>
     </div>
     <div id="number-of-cards-player2" v-if="isPlayer2">
-      <h1>{{ this.$store.state.gainCardsNumberOfPlayer2 }}</h1>
-      <h1>sheets</h1>
+      <h1>{{ this.$store.state.gainCardsOfPlayer2 }}</h1>
     </div>
   </div>
 </template>
@@ -31,7 +29,7 @@ export default class GainCardsField extends Vue {
   height: 13rem;
   margin-left: 3%;
   text-align: center;
-  font-size: 1rem;
+  font-size: 0.5rem;
   background-color: mediumseagreen;
 }
 </style>

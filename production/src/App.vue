@@ -37,7 +37,7 @@ export default class App extends Vue {
   }
   // 動作確認用関数
   private onClickNumberOfPlayer1() {
-    store.commit('incrementGainCardsNumberOfPlayer1');
+    store.commit('incrementGainCardsOfPlayer1');
   }
 }
 </script>

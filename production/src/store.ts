@@ -27,8 +27,8 @@ export default new Vuex.Store({
     commonCardsField: null,
     gainCardsFieldOfPlayer1: null,
     gainCardsFieldOfPlayer2: null,
-    gainCardsOfPlayer1: [{Card: new Card()}],
-    gainCardsOfPlayer2: [{Card: new Card()}],
+    gainCardsOfPlayer1: [new Card()],
+    gainCardsOfPlayer2: [new Card()],
     turnPlayer: Player.player1,
     turnCount: 0,
     openedCards: 0,
@@ -49,7 +49,7 @@ export default new Vuex.Store({
         number: 4,
         orientation: CardOrientation.front,
       }});
-      state.gainCardsOfPlayer1.push({Card: newCard});
+      state.gainCardsOfPlayer1.push(newCard);
     },
   },
   actions: {

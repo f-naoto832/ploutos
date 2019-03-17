@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import Card from './components/Card.vue';
 
 Vue.use(Vuex);
 
@@ -13,6 +14,7 @@ export enum Scene {
   playing,
   finish,
 }
+
 export enum CardOrientation {
   front,
   back,
@@ -25,6 +27,8 @@ export default new Vuex.Store({
     commonCardsField: null,
     gainCardsFieldOfPlayer1: null,
     gainCardsFieldOfPlayer2: null,
+    gainCardsOfPlayer1: [new Card()],
+    gainCardsOfPlayer2: [new Card()],
     turnPlayer: Player.player1,
     turnCount: 0,
     openedCards: 0,
@@ -39,6 +43,13 @@ export default new Vuex.Store({
     },
     incrementTurnCount(state) {
       state.turnCount++;
+    },
+    incrementGainCardsOfPlayer1(state) {
+      const newCard = new Card({ propsData: {
+        number: 4,
+        orientation: CardOrientation.front,
+      }});
+      state.gainCardsOfPlayer1.push(newCard);
     },
   },
   actions: {

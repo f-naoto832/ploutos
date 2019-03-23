@@ -1,9 +1,11 @@
 <template>
   <div id="app">
+    <CommonCardsField/>
     <PersonalCardsField/>
     <TurnCounter />
     <button v-on:click="onClickNext">Next(ターン経過の動作確認用ボタン)</button>
     <button v-on:click="onClickNumberOfPlayer1">Next(取得カード数の動作確認用ボタン)</button>
+    <button v-on:click="onClickDistributionCard">distribution(共用フィールドの動作確認)</button>
     <PlayButton />
     <ReplayButton />
   </div>
@@ -15,6 +17,7 @@ import store from './store';
 import TurnCounter from './components/TurnCounter.vue';
 import Card from './components/Card.vue';
 import PersonalCardsField from './components/PersonalCardsField.vue';
+import CommonCardsField from './components/CommonCardsField.vue';
 import PlayButton from './components/PlayButton.vue';
 import ReplayButton from './components/ReplayButton.vue';
 import { CardOrientation } from './store';
@@ -26,6 +29,7 @@ import { CardOrientation } from './store';
     PersonalCardsField,
     PlayButton,
     ReplayButton,
+    CommonCardsField,
   },
 })
 export default class App extends Vue {
@@ -38,6 +42,9 @@ export default class App extends Vue {
   // 動作確認用関数
   private onClickNumberOfPlayer1() {
     store.commit('incrementGainCardsOfPlayer1');
+  }
+  private onClickDistributionCard() {
+    store.commit('initCommonCardsField');
   }
 }
 </script>

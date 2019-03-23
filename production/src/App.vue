@@ -1,7 +1,9 @@
 <template>
   <div id="app">
+    <GainCardsField1/>
     <player1CardsField/>
     <CommonCardsField/>
+    <GainCardsField2/>
     <player2CardsField/>
     <TurnCounter />
     <button v-on:click="onClickNext">Next(ターン経過の動作確認用ボタン)</button>
@@ -19,6 +21,8 @@ import TurnCounter from './components/TurnCounter.vue';
 import Card from './components/Card.vue';
 import Player1CardsField from './components/Player1CardsField.vue';
 import Player2CardsField from './components/Player2CardsField.vue';
+import GainCardsField1 from './components/GainCardsField1.vue';
+import GainCardsField2 from './components/GainCardsField2.vue';
 import CommonCardsField from './components/CommonCardsField.vue';
 import PlayButton from './components/PlayButton.vue';
 import ReplayButton from './components/ReplayButton.vue';
@@ -30,6 +34,8 @@ import { CardOrientation } from './store';
     Card,
     Player1CardsField,
     Player2CardsField,
+    GainCardsField1,
+    GainCardsField2,
     PlayButton,
     ReplayButton,
     CommonCardsField,

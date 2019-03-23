@@ -1,3 +1,4 @@
+import { CardStructure } from './store';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import Card from './components/Card.vue';
@@ -19,12 +20,16 @@ export enum CardOrientation {
   front,
   back,
 }
+export interface CardStructure {
+  number: number;
+  orientation: CardOrientation;
+}
 
 export default new Vuex.Store({
   state: {
     personalCardsFieldOfPlayer1: null,
     personalCardsFieldOfPlayer2: null,
-    commonCardsField: Array<Card>(),
+    commonCardsField: Array<CardStructure>(),
     gainCardsFieldOfPlayer1: null,
     gainCardsFieldOfPlayer2: null,
     gainCardsOfPlayer1: [new Card()],
@@ -41,10 +46,10 @@ export default new Vuex.Store({
       const numberOfCard = 10;
 
       for (let i = 1; i < numberOfCard + 1; i++) {
-        const newCard = new Card({ propsData: {
+        const newCard: CardStructure = {
           number: i,
           orientation: CardOrientation.front,
-        }});
+        };
         state.commonCardsField.push(newCard);
       }
     },

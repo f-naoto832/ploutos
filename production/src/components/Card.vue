@@ -11,12 +11,12 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { CardOrientation } from '../store';
+import { CardOrientation, CardStructure } from '../store';
 
 @Component
-export default class Card extends Vue {
-  @Prop() private number!: number;
-  @Prop() private orientation!: CardOrientation;
+export default class Card extends Vue implements CardStructure {
+  @Prop() public number!: number;
+  @Prop() public orientation!: CardOrientation;
   private isFrontShow: boolean = this.orientation === CardOrientation.front;
   private isBackShow: boolean = this.orientation === CardOrientation.back;
 }

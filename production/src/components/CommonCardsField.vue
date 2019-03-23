@@ -1,8 +1,9 @@
 <template>
   <div class="commonCardsField">
     <div class="row">
-      <!-- <component v-for="(card,index) in this.$store.state.commonCardsField" :is="card" :key="index">
-      </component> -->
+      <template v-for="(card,key) in this.$store.state.commonCardsField">
+        <Card v-bind:number="card.number" v-bind:orientation="card.orientation" v-bind:key="key"/>
+      </template>
     </div>
     
   </div>
@@ -20,19 +21,19 @@ import { Player } from '../store';
   },
 })
 export default class CommonCardsField extends Vue {
-  public mounted() {
-    this.$store.watch(
-      ( state, getters ) => {
-        return state.commonCardsField;
-      },
-      ( newVal, oldVal) => {
-        const commonCardsField: Card[] = newVal;
-        commonCardsField.forEach( ( card ) => {
-          card.$mount('#row');
-        });
-      },
-    );
-  }
+  // public mounted() {
+  //   this.$store.watch(
+  //     ( state, getters ) => {
+  //       return state.commonCardsField;
+  //     },
+  //     ( newVal, oldVal) => {
+  //       const commonCardsField: Card[] = newVal;
+  //       commonCardsField.forEach( ( card ) => {
+  //         card.$mount('#row');
+  //       });
+  //     },
+  //   );
+  // }
 }
 </script>
 
@@ -48,7 +49,6 @@ export default class CommonCardsField extends Vue {
 .row {
   position: relative;
   width: 50rem;
-  height: 13rem;
   text-align: center;
 }
 </style>

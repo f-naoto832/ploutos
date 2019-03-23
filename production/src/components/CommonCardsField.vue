@@ -21,19 +21,6 @@ import { Player } from '../store';
   },
 })
 export default class CommonCardsField extends Vue {
-  // public mounted() {
-  //   this.$store.watch(
-  //     ( state, getters ) => {
-  //       return state.commonCardsField;
-  //     },
-  //     ( newVal, oldVal) => {
-  //       const commonCardsField: Card[] = newVal;
-  //       commonCardsField.forEach( ( card ) => {
-  //         card.$mount('#row');
-  //       });
-  //     },
-  //   );
-  // }
 }
 </script>
 

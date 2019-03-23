@@ -1,10 +1,10 @@
 <template>
   <div class="gainCardsField">
     <div id="number-of-cards-player1" v-if="isPlayer1">
-      <h1>{{ this.$store.state.gainCardsOfPlayer1.length - 1 }} pairs</h1>
+      <h1>{{ this.$store.state.gainCardsOfPlayer1.length }} pairs</h1>
     </div>
     <div id="number-of-cards-player2" v-if="isPlayer2">
-      <h1>{{ this.$store.state.gainCardsOfPlayer2.length - 1 }} pairs</h1>
+      <h1>{{ this.$store.state.gainCardsOfPlayer2.length }} pairs</h1>
     </div>
   </div>
 </template>

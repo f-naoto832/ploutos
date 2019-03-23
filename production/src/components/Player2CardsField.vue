@@ -1,0 +1,56 @@
+<template>
+  <div class="personalCardsField">
+    <div class="gainCards">
+      <GainCardsField v-bind:player="player" />
+    </div>
+    <div class="ownCards">
+      <template v-for="(card,key) in this.$store.state.personalCardsOfPlayer2">
+        <Card v-bind:number="card.number" v-bind:orientation="card.orientation" v-bind:key="key"/>
+      </template>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
+import Card from './Card.vue';
+import GainCardsField from './GainCardsField.vue';
+import { CardOrientation, Player, CardStructure } from '../store';
+
+@Component({
+  components: {
+    Card,
+    GainCardsField,
+  },
+})
+export default class Player2CardsField extends Vue {
+    private orientation: CardOrientation = CardOrientation.back;
+    private player: Player = Player.player2;
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+.personalCardsField {
+  position: relative;
+  width: 60%;
+  height: 13rem;
+  margin-left: 20%;
+  text-align: center;
+}
+.gainCards {
+  position: absolute;
+  width: 10rem;
+  height: 13rem;
+  text-align: center;
+  background-color: lightgoldenrodyellow;
+}
+.ownCards {
+  position: absolute;
+  width: 50rem;
+  height: 13rem;
+  margin-left: 20%;
+  text-align: center;
+  background-color: lightgoldenrodyellow;
+}
+</style>

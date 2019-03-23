@@ -25,15 +25,26 @@ export interface CardStructure {
   orientation: CardOrientation;
 }
 
-export default new Vuex.Store({
+interface PloutosState {
+  personalCardsOfPlayer1: CardStructure[];
+  personalCardsOfPlayer2: CardStructure[];
+  commonCardsField: CardStructure[];
+  gainCardsOfPlayer1: CardStructure[];
+  gainCardsOfPlayer2: CardStructure[];
+  turnPlayer: Player;
+  turnCount: number;
+  openedCards: number;
+  isPrivilegeAvailable: boolean;
+  scene: Scene;
+}
+
+export default new Vuex.Store<PloutosState>({
   state: {
-    personalCardsFieldOfPlayer1: null,
-    personalCardsFieldOfPlayer2: null,
+    personalCardsOfPlayer1: Array<CardStructure>(),
+    personalCardsOfPlayer2: Array<CardStructure>(),
     commonCardsField: Array<CardStructure>(),
-    gainCardsFieldOfPlayer1: null,
-    gainCardsFieldOfPlayer2: null,
-    gainCardsOfPlayer1: [new Card()],
-    gainCardsOfPlayer2: [new Card()],
+    gainCardsOfPlayer1: Array<CardStructure>(),
+    gainCardsOfPlayer2: Array<CardStructure>(),
     turnPlayer: Player.player1,
     turnCount: 0,
     openedCards: 0,
@@ -53,6 +64,19 @@ export default new Vuex.Store({
         state.commonCardsField.push(newCard);
       }
     },
+    initPersonalCardsField(state) {
+      // こういう値はどこかでconfigファイルとかに移したい
+      const numberOfCard = 5;
+
+      for (let i = 1; i < numberOfCard + 1; i++) {
+        const newCard: CardStructure = {
+          number: i,
+          orientation: CardOrientation.back,
+        };
+        state.personalCardsOfPlayer1.push(newCard);
+        state.personalCardsOfPlayer2.push(newCard);
+      }
+    },
     increment(state) {
       // ここで状態を更新する
       // state.xxx = yyy;
@@ -62,10 +86,10 @@ export default new Vuex.Store({
       state.turnCount++;
     },
     incrementGainCardsOfPlayer1(state) {
-      const newCard = new Card({ propsData: {
+      const newCard: CardStructure = {
         number: 4,
         orientation: CardOrientation.front,
-      }});
+      };
       state.gainCardsOfPlayer1.push(newCard);
     },
   },

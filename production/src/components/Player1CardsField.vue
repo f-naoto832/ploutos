@@ -4,11 +4,9 @@
       <GainCardsField v-bind:player="player" />
     </div>
     <div class="ownCards">
-      <Card number=1 v-bind:orientation="orientation"/>
-      <Card number=2 v-bind:orientation="orientation"/>
-      <Card number=3 v-bind:orientation="orientation"/>
-      <Card number=4 v-bind:orientation="orientation"/>
-      <Card number=5 v-bind:orientation="orientation"/>
+      <template v-for="(card,key) in this.$store.state.personalCardsOfPlayer1">
+        <Card v-bind:number="card.number" v-bind:orientation="card.orientation" v-bind:key="key"/>
+      </template>
     </div>
   </div>
 </template>
@@ -17,8 +15,7 @@
 import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
 import Card from './Card.vue';
 import GainCardsField from './GainCardsField.vue';
-import { CardOrientation } from '../store';
-import { Player } from '../store';
+import { CardOrientation, Player, CardStructure } from '../store';
 
 @Component({
   components: {
@@ -26,7 +23,7 @@ import { Player } from '../store';
     GainCardsField,
   },
 })
-export default class PersonalCardsField extends Vue {
+export default class Player2CardsField extends Vue {
     private orientation: CardOrientation = CardOrientation.back;
     private player: Player = Player.player1;
 }

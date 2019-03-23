@@ -1,19 +1,10 @@
 <template>
   <div class="commonCardsField">
     <div class="row">
-      <Card number=1 v-bind:orientation="orientation"/>
-      <Card number=2 v-bind:orientation="orientation"/>
-      <Card number=3 v-bind:orientation="orientation"/>
-      <Card number=4 v-bind:orientation="orientation"/>
-      <Card number=5 v-bind:orientation="orientation"/>
+      <!-- <component v-for="(card,index) in this.$store.state.commonCardsField" :is="card" :key="index">
+      </component> -->
     </div>
-    <div class="row">
-      <Card number=1 v-bind:orientation="orientation"/>
-      <Card number=2 v-bind:orientation="orientation"/>
-      <Card number=3 v-bind:orientation="orientation"/>
-      <Card number=4 v-bind:orientation="orientation"/>
-      <Card number=5 v-bind:orientation="orientation"/>
-    </div>
+    
   </div>
 </template>
 
@@ -29,7 +20,19 @@ import { Player } from '../store';
   },
 })
 export default class CommonCardsField extends Vue {
-    private orientation: CardOrientation = CardOrientation.back;
+  public mounted() {
+    this.$store.watch(
+      ( state, getters ) => {
+        return state.commonCardsField;
+      },
+      ( newVal, oldVal) => {
+        const commonCardsField: Card[] = newVal;
+        commonCardsField.forEach( ( card ) => {
+          card.$mount('#row');
+        });
+      },
+    );
+  }
 }
 </script>
 

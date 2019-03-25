@@ -1,6 +1,6 @@
 <template>
   <div class="gainCardsField">
-    <h1>{{ this.$store.state.gainCardsOfPlayer2.length }} pairs</h1>
+    <h1>{{ this.$store.state.gainCardsOfPlayer2.length }} points</h1>
   </div>
 </template>
 

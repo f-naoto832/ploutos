@@ -57,20 +57,26 @@ export default class App extends Vue {
   // 動作確認用関数 1枚一致
   private gain1() {
     store.commit('makeAloneCards');
-    store.commit('findCardsWithSameNumber');
-    store.commit('gainCards');
+    setTimeout(() => {
+      store.commit('findCardsWithSameNumber');
+      store.commit('gainCards');
+    }, 500);
   }
   // 動作確認用関数 2枚一致
   private gain2() {
     store.commit('makePairCards');
-    store.commit('findCardsWithSameNumber');
-    store.commit('gainCards');
+    setTimeout(() => {
+      store.commit('findCardsWithSameNumber');
+      store.commit('gainCards');
+    }, 500);
   }
   // 動作確認用関数 3枚一致
   private gain3() {
     store.commit('makeTripleCards');
-    store.commit('findCardsWithSameNumber');
-    store.commit('gainCards');
+    setTimeout(() => {
+      store.commit('findCardsWithSameNumber');
+      store.commit('gainCards');
+    }, 500);
   }
 }
 </script>

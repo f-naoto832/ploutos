@@ -7,9 +7,9 @@
     <player2CardsField/>
     <TurnCounter />
     <button v-on:click="onClickNext">Next(ターン経過の動作確認用ボタン)</button>
-    <button v-on:click="gain1">ペアなし</button>
-    <button v-on:click="gain2">ペア</button>
-    <button v-on:click="gain3">トリプル</button>
+    <button v-on:click="gain1">ペアなし(要dist)</button>
+    <button v-on:click="gain2">ペア(要dist)</button>
+    <button v-on:click="gain3">トリプル(要dist)</button>
     <button v-on:click="onClickDistributionCard">distribution(共用フィールドの動作確認)</button>
     <PlayButton />
     <ReplayButton />

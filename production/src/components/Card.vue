@@ -1,9 +1,10 @@
 <template>
   <div class="card">
-    <div id="card-front" v-if="isFrontShow">
+    <div id="card-front" v-if="isFrontShow" v-on:click="flipCards">
       <h1>{{ number }}</h1>
+      <img id="card-design" src="../assets/card-front.jpg">
     </div>
-    <div id="card-back" v-if="isBackShow">
+    <div id="card-back" v-if="isBackShow" v-on:click="flipCards">
       <img id="card-design" src="../assets/card-back.jpg">
     </div>
   </div>
@@ -19,6 +20,17 @@ export default class Card extends Vue implements CardStructure {
   @Prop() public orientation!: CardOrientation;
   private isFrontShow: boolean = this.orientation === CardOrientation.front;
   private isBackShow: boolean = this.orientation === CardOrientation.back;
+  private flipCards() {
+    if ( this.isFrontShow ) {
+      this.isFrontShow = false;
+      this.isBackShow = true;
+      this.orientation = CardOrientation.back;
+    } else {
+      this.isFrontShow = true;
+      this.isBackShow = false;
+      this.orientation = CardOrientation.front;
+    }
+  }
 }
 </script>
 
@@ -32,6 +44,10 @@ export default class Card extends Vue implements CardStructure {
   margin: 0.2rem;
   transition: all 0.2s ease;
   border: 3px solid #176123;
+}
+.card h1 {
+  position: absolute;
+  margin: 0.2rem;
 }
 img {
   width:auto;

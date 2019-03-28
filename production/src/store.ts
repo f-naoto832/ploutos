@@ -1,7 +1,6 @@
 import { CardStructure } from './store';
 import Vue from 'vue';
 import Vuex from 'vuex';
-import Card from './components/Card.vue';
 
 Vue.use(Vuex);
 

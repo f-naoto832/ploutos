@@ -1,8 +1,8 @@
 <template>
   <div class="personalCardsField">
     <div class="ownCards">
-      <template v-for="(card,key) in this.$store.state.personalCardsOfPlayer1">
-        <Card v-bind:number="card.number" v-bind:orientation="card.orientation" v-bind:key="key"/>
+      <template v-for="(card,key) in personalCardsOfPlayer1">
+        <CardHolder v-bind:card="card" v-bind:key="key"/>
       </template>
     </div>
   </div>
@@ -11,16 +11,26 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
 import Card from './Card.vue';
+import CardHolder from './CardHolder.vue';
 import { CardOrientation, Player, CardStructure } from '../store';
+
+const fieldCardNumber = 5;
 
 @Component({
   components: {
     Card,
+    CardHolder,
   },
 })
-export default class Player2CardsField extends Vue {
-    private orientation: CardOrientation = CardOrientation.back;
-    private player: Player = Player.player1;
+export default class Player1CardsField extends Vue {
+  private player: Player = Player.player1;
+  private get personalCardsOfPlayer1(): Array<CardStructure | null> {
+    const personalCardsField: Array<CardStructure | null> = [ ...this.$store.state.personalCardsOfPlayer1];
+    for (let i = 0; i < fieldCardNumber - this.$store.state.personalCardsOfPlayer1.length; i++ ) {
+      personalCardsField.push(null);
+    }
+    return personalCardsField;
+  }
 }
 </script>
 

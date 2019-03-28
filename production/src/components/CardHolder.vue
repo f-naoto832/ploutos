@@ -18,8 +18,9 @@ import Card from './Card.vue';
 })
 export default class CardHolder extends Vue {
   @Prop() public card!: CardStructure;
-  private cardExist: boolean  = this.card != null;
-
+  private get cardExist(): boolean {
+    return this.card != null;
+    }
 }
 </script>
 

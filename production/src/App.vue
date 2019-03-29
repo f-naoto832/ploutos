@@ -7,7 +7,9 @@
     <player2CardsField/>
     <TurnCounter />
     <button v-on:click="onClickNext">Next(ターン経過の動作確認用ボタン)</button>
-    <button v-on:click="onClickNumberOfPlayer1">Next(取得カード数の動作確認用ボタン)</button>
+    <button v-on:click="gain1">ペアなし(要dist)</button>
+    <button v-on:click="gain2">ペア(要dist)</button>
+    <button v-on:click="gain3">トリプル(要dist)</button>
     <button v-on:click="onClickDistributionCard">distribution(共用フィールドの動作確認)</button>
     <PlayButton />
     <ReplayButton />
@@ -48,13 +50,33 @@ export default class App extends Vue {
   private onClickNext() {
     store.commit('incrementTurnCount');
   }
-  // 動作確認用関数
-  private onClickNumberOfPlayer1() {
-    store.commit('incrementGainCardsOfPlayer1');
-  }
   private onClickDistributionCard() {
     store.commit('initCommonCardsField');
     store.commit('initPersonalCardsField');
+  }
+  // 動作確認用関数 1枚一致
+  private gain1() {
+    store.commit('makeAloneCards');
+    setTimeout(() => {
+      store.commit('findCardsWithSameNumber');
+      store.commit('gainCards');
+    }, 500);
+  }
+  // 動作確認用関数 2枚一致
+  private gain2() {
+    store.commit('makePairCards');
+    setTimeout(() => {
+      store.commit('findCardsWithSameNumber');
+      store.commit('gainCards');
+    }, 500);
+  }
+  // 動作確認用関数 3枚一致
+  private gain3() {
+    store.commit('makeTripleCards');
+    setTimeout(() => {
+      store.commit('findCardsWithSameNumber');
+      store.commit('gainCards');
+    }, 500);
   }
 }
 </script>

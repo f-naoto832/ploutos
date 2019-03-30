@@ -1,12 +1,17 @@
 <template>
-  <a class="btn-flat-stripe">PLAY</a>
+  <button class="btn-flat-stripe" v-on:click="onClickPlayButton">PLAY</button>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
+import store from '../store';
 
 @Component
-export default class PlayButton extends Vue { }
+export default class PlayButton extends Vue {
+  private onClickPlayButton() {
+    store.dispatch('startGame');
+  }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -15,6 +20,7 @@ export default class PlayButton extends Vue { }
   position: relative;
   display: inline-block;
   font-weight: bold;
+  font-size: large;
   padding: 0.5em 1em;
   text-decoration: none;
   border-left: solid 4px #668ad8;

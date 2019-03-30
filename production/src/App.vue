@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Menu v-if="shouldMenuBeShown"></Menu>
     <GainCardsField1/>
     <player1CardsField/>
     <CommonCardsField/>
@@ -19,6 +20,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import store from './store';
+import Menu from './components/Menu.vue';
 import TurnCounter from './components/TurnCounter.vue';
 import Card from './components/Card.vue';
 import Player1CardsField from './components/Player1CardsField.vue';
@@ -28,10 +30,11 @@ import GainCardsField2 from './components/GainCardsField2.vue';
 import CommonCardsField from './components/CommonCardsField.vue';
 import PlayButton from './components/PlayButton.vue';
 import ReplayButton from './components/ReplayButton.vue';
-import { CardOrientation } from './store';
+import { CardOrientation, Scene } from './store';
 
 @Component({
   components: {
+    Menu,
     TurnCounter,
     Card,
     Player1CardsField,
@@ -44,6 +47,9 @@ import { CardOrientation } from './store';
   },
 })
 export default class App extends Vue {
+  private get shouldMenuBeShown() {
+    return this.$store.state.scene !== Scene.playing;
+  }
 // 確認用
   private orientation: CardOrientation = CardOrientation.back;
   // 動作確認用関数

@@ -12,8 +12,7 @@
     <button v-on:click="gain2">ペア(要dist)</button>
     <button v-on:click="gain3">トリプル(要dist)</button>
     <button v-on:click="onClickDistributionCard">distribution(共用フィールドの動作確認)</button>
-    <PlayButton />
-    <ReplayButton />
+    <button v-on:click="gameover">ゲームオーバー</button>
   </div>
 </template>
 
@@ -83,6 +82,10 @@ export default class App extends Vue {
       store.commit('findCardsWithSameNumber');
       store.commit('gainCards');
     }, 500);
+  }
+  // 動作確認用（Sceneを変更するしてリプレイの画面を表示させるだけ）
+  private gameover() {
+    store.commit('setScene', Scene.finish);
   }
 }
 </script>

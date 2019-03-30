@@ -33,7 +33,7 @@ export default class Menu extends Vue {
   z-index: 1;
   background-color: rgba(0, 0, 0, 0.5);
   /* 画面いっぱいに広げる */
-  position: absolute;
+  position: fixed;
   height: 100%;
   width: 100%;
   left: 0;

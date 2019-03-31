@@ -27,7 +27,7 @@ export interface CardStructure {
 interface PloutosState {
   personalCardsOfPlayer1: CardStructure[];
   personalCardsOfPlayer2: CardStructure[];
-  commonCardsField: CardStructure[];
+  commonCards: CardStructure[];
   gainCardsOfPlayer1: CardStructure[];
   gainCardsOfPlayer2: CardStructure[];
   turnPlayer: Player;
@@ -42,7 +42,7 @@ export default new Vuex.Store<PloutosState>({
   state: {
     personalCardsOfPlayer1: Array<CardStructure>(),
     personalCardsOfPlayer2: Array<CardStructure>(),
-    commonCardsField: Array<CardStructure>(),
+    commonCards: Array<CardStructure>(),
     gainCardsOfPlayer1: Array<CardStructure>(),
     gainCardsOfPlayer2: Array<CardStructure>(),
     turnPlayer: Player.player1,
@@ -65,7 +65,7 @@ export default new Vuex.Store<PloutosState>({
         };
         cards = cards.concat(newCard);
       }
-      state.commonCardsField = cards;
+      state.commonCards = cards;
     },
     initPersonalCardsField(state) {
       // こういう値はどこかでconfigファイルとかに移したい
@@ -99,7 +99,7 @@ export default new Vuex.Store<PloutosState>({
       state.matchedCards = [];
     },
     findCardsWithSameNumber(state) {
-      const openedCommonCards = state.commonCardsField.filter((card) => card.orientation === CardOrientation.front);
+      const openedCommonCards = state.commonCards.filter((card) => card.orientation === CardOrientation.front);
       const openedPersonalCards = state.turnPlayer === Player.player1
         ? state.personalCardsOfPlayer1.filter((card) => card.orientation === CardOrientation.front)
         : state.personalCardsOfPlayer2.filter((card) => card.orientation === CardOrientation.front);
@@ -113,7 +113,7 @@ export default new Vuex.Store<PloutosState>({
         [0];
       const matchingNumber = cardSet[0].number;
       if (cardSet.length > 1) {
-        state.commonCardsField = state.commonCardsField
+        state.commonCards = state.commonCards
           .filter((card) => card.number !== matchingNumber || card.orientation !== CardOrientation.front);
         if (state.turnPlayer === Player.player1) {
           state.personalCardsOfPlayer1 = state.personalCardsOfPlayer1
@@ -127,20 +127,20 @@ export default new Vuex.Store<PloutosState>({
     },
     // 動作確認用 1枚一致にする
     makeAloneCards(state) {
-      state.commonCardsField[0] = {number: 1, orientation: CardOrientation.front};
-      state.commonCardsField[5] = {number: 5, orientation: CardOrientation.front};
+      state.commonCards[0] = {number: 1, orientation: CardOrientation.front};
+      state.commonCards[5] = {number: 5, orientation: CardOrientation.front};
       state.personalCardsOfPlayer1[3] = {number: 3, orientation: CardOrientation.front};
     },
     // 動作確認用 2枚一致にする
     makePairCards(state) {
-      state.commonCardsField[0] = {number: 3, orientation: CardOrientation.front};
-      state.commonCardsField[5] = {number: 5, orientation: CardOrientation.front};
+      state.commonCards[0] = {number: 3, orientation: CardOrientation.front};
+      state.commonCards[5] = {number: 5, orientation: CardOrientation.front};
       state.personalCardsOfPlayer1[3] = {number: 3, orientation: CardOrientation.front};
     },
     // 動作確認用 3枚一致にする
     makeTripleCards(state) {
-      state.commonCardsField[0] = {number: 3, orientation: CardOrientation.front};
-      state.commonCardsField[5] = {number: 3, orientation: CardOrientation.front};
+      state.commonCards[0] = {number: 3, orientation: CardOrientation.front};
+      state.commonCards[5] = {number: 3, orientation: CardOrientation.front};
       state.personalCardsOfPlayer1[3] = {number: 3, orientation: CardOrientation.front};
     },
   },

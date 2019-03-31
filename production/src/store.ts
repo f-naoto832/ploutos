@@ -150,11 +150,6 @@ export default new Vuex.Store<PloutosState>({
   },
 
   actions: {
-    startGame() {
-      this.commit('setScene', Scene.playing);
-      this.commit('initCommonCardsField');
-      this.commit('initPersonalCardsField');
-    },
   },
 
 });

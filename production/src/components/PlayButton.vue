@@ -4,12 +4,14 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
-import store from '../store';
+import store, { Scene } from '../store';
 
 @Component
 export default class PlayButton extends Vue {
   private onClickPlayButton() {
-    store.dispatch('startGame');
+    store.commit('setScene', Scene.playing);
+    store.commit('initCommonCardsField');
+    store.commit('initPersonalCardsField');
   }
 }
 </script>

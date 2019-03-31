@@ -1,12 +1,19 @@
 <template>
-  <a class="btn-flat-stripe">もう一度！</a>
+  <button class="btn-flat-stripe" v-on:click="onClickPlayButton">もう一度！</button>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
+import store, { Scene } from '../store';
 
 @Component
-export default class ReplayButton extends Vue { }
+export default class ReplayButton extends Vue {
+  private onClickPlayButton() {
+    store.commit('setScene', Scene.playing);
+    store.commit('initCommonCardsField');
+    store.commit('initPersonalCardsField');
+  }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -15,6 +22,7 @@ export default class ReplayButton extends Vue { }
   position: relative;
   display: inline-block;
   font-weight: bold;
+  font-size: large;
   padding: 0.5em 1em;
   text-decoration: none;
   border-left: solid 4px #668ad8;

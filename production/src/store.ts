@@ -143,6 +143,9 @@ export default new Vuex.Store<PloutosState>({
       state.commonCards[5] = {number: 3, orientation: CardOrientation.front};
       state.personalCardsOfPlayer1[3] = {number: 3, orientation: CardOrientation.front};
     },
+    setScene(state: PloutosState, payload: Scene) {
+      state.scene = payload;
+    },
   },
 
   actions: {

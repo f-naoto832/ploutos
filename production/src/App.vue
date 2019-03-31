@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Menu v-if="shouldMenuBeShown"></Menu>
     <GainCardsField1/>
     <player1CardsField/>
     <CommonCardsField/>
@@ -11,14 +12,14 @@
     <button v-on:click="gain2">ペア(要dist)</button>
     <button v-on:click="gain3">トリプル(要dist)</button>
     <button v-on:click="onClickDistributionCard">distribution(共用フィールドの動作確認)</button>
-    <PlayButton />
-    <ReplayButton />
+    <button v-on:click="gameover">ゲームオーバー</button>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import store from './store';
+import Menu from './components/Menu.vue';
 import TurnCounter from './components/TurnCounter.vue';
 import Card from './components/Card.vue';
 import Player1CardsField from './components/Player1CardsField.vue';
@@ -28,10 +29,11 @@ import GainCardsField2 from './components/GainCardsField2.vue';
 import CommonCardsField from './components/CommonCardsField.vue';
 import PlayButton from './components/PlayButton.vue';
 import ReplayButton from './components/ReplayButton.vue';
-import { CardOrientation } from './store';
+import { CardOrientation, Scene } from './store';
 
 @Component({
   components: {
+    Menu,
     TurnCounter,
     Card,
     Player1CardsField,
@@ -44,6 +46,9 @@ import { CardOrientation } from './store';
   },
 })
 export default class App extends Vue {
+  private get shouldMenuBeShown() {
+    return this.$store.state.scene !== Scene.playing;
+  }
 // 確認用
   private orientation: CardOrientation = CardOrientation.back;
   // 動作確認用関数
@@ -77,6 +82,10 @@ export default class App extends Vue {
       store.commit('findCardsWithSameNumber');
       store.commit('gainCards');
     }, 500);
+  }
+  // 動作確認用（Sceneを変更するしてリプレイの画面を表示させるだけ）
+  private gameover() {
+    store.commit('setScene', Scene.finish);
   }
 }
 </script>

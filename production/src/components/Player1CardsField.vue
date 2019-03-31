@@ -25,11 +25,11 @@ const fieldCardNumber = 5;
 export default class Player1CardsField extends Vue {
   private player: Player = Player.player1;
   private get personalCardsOfPlayer1(): Array<CardStructure | null> {
-    const personalCardsField: Array<CardStructure | null> = [ ...this.$store.state.personalCardsOfPlayer1];
+    const personalCards: Array<CardStructure | null> = [ ...this.$store.state.personalCardsOfPlayer1];
     for (let i = 0; i < fieldCardNumber - this.$store.state.personalCardsOfPlayer1.length; i++ ) {
-      personalCardsField.push(null);
+      personalCards.push(null);
     }
-    return personalCardsField;
+    return personalCards;
   }
 }
 </script>

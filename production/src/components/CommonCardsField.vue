@@ -25,11 +25,11 @@ const fieldCardNumber = 10;
 })
 export default class CommonCardsField extends Vue {
   private get commonCards(): Array<CardStructure | null> {
-    const commonCardsField: Array<CardStructure | null> = [ ...this.$store.state.commonCardsField];
-    for (let i = 0; i < fieldCardNumber - this.$store.state.commonCardsField.length; i++ ) {
-      commonCardsField.push(null);
+    const commonCards: Array<CardStructure | null> = [ ...this.$store.state.commonCards];
+    for (let i = 0; i < fieldCardNumber - this.$store.state.commonCards.length; i++ ) {
+      commonCards.push(null);
     }
-    return commonCardsField;
+    return commonCards;
   }
 }
 </script>

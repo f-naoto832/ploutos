@@ -20,7 +20,7 @@ export default class CardHolder extends Vue {
   @Prop() public card!: CardStructure;
   private get cardExist(): boolean {
     return this.card != null;
-    }
+  }
 }
 </script>
 

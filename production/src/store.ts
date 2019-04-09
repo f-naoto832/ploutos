@@ -22,6 +22,7 @@ export enum CardOrientation {
 export interface CardStructure {
   number: number;
   orientation: CardOrientation;
+  id: number;
 }
 
 interface PloutosState {
@@ -35,6 +36,8 @@ interface PloutosState {
   matchedCards: CardStructure[];
   isPrivilegeAvailable: boolean;
   scene: Scene;
+  flipCardNumber: number;
+  generateCardId: number;
 }
 
 export default new Vuex.Store<PloutosState>({
@@ -50,6 +53,8 @@ export default new Vuex.Store<PloutosState>({
     matchedCards: Array<CardStructure>(),
     isPrivilegeAvailable: true,
     scene: Scene.preparing,
+    flipCardNumber: 0,
+    generateCardId: 0,
   },
 
   mutations: {
@@ -62,7 +67,9 @@ export default new Vuex.Store<PloutosState>({
         const newCard: CardStructure = {
           number: i,
           orientation: CardOrientation.back,
+          id: state.generateCardId,
         };
+        state.generateCardId += 1;
         cards = cards.concat(newCard);
       }
       state.commonCards = cards;
@@ -76,7 +83,9 @@ export default new Vuex.Store<PloutosState>({
         const newCard: CardStructure = {
           number: i,
           orientation: CardOrientation.back,
+          id: state.generateCardId,
         };
+        state.generateCardId += 1;
         cards = cards.concat(newCard);
       }
       state.personalCardsOfPlayer1 = cards;
@@ -89,6 +98,17 @@ export default new Vuex.Store<PloutosState>({
     },
     incrementTurnCount(state) {
       state.turnCount++;
+      state.flipCardNumber = 0;
+      const changeOrientation = (card: CardStructure) => {
+        card.orientation = card.orientation === CardOrientation.front ?  CardOrientation.back : CardOrientation.front;
+        return card;
+      };
+      const undoFlipCard = ( card: CardStructure ) => {
+        return  card.orientation === CardOrientation.front ? changeOrientation(card) : card;
+      };
+      state.commonCards = state.commonCards.map(undoFlipCard);
+      state.gainCardsOfPlayer1 = state.gainCardsOfPlayer1.map(undoFlipCard);
+      state.gainCardsOfPlayer2 = state.gainCardsOfPlayer2.map(undoFlipCard);
     },
     gainCards(state) {
       if (state.turnPlayer === Player.player1) {
@@ -127,28 +147,48 @@ export default new Vuex.Store<PloutosState>({
     },
     // 動作確認用 1枚一致にする
     makeAloneCards(state) {
-      state.commonCards[0] = {number: 1, orientation: CardOrientation.front};
-      state.commonCards[5] = {number: 5, orientation: CardOrientation.front};
-      state.personalCardsOfPlayer1[3] = {number: 3, orientation: CardOrientation.front};
+      state.commonCards[0] = {number: 1, orientation: CardOrientation.front, id: 0};
+      state.commonCards[5] = {number: 5, orientation: CardOrientation.front, id: 0};
+      state.personalCardsOfPlayer1[3] = {number: 3, orientation: CardOrientation.front, id: 0};
     },
     // 動作確認用 2枚一致にする
     makePairCards(state) {
-      state.commonCards[0] = {number: 3, orientation: CardOrientation.front};
-      state.commonCards[5] = {number: 5, orientation: CardOrientation.front};
-      state.personalCardsOfPlayer1[3] = {number: 3, orientation: CardOrientation.front};
+      state.commonCards[0] = {number: 3, orientation: CardOrientation.front, id: 0};
+      state.commonCards[5] = {number: 5, orientation: CardOrientation.front, id: 0};
+      state.personalCardsOfPlayer1[3] = {number: 3, orientation: CardOrientation.front, id: 0};
     },
     // 動作確認用 3枚一致にする
     makeTripleCards(state) {
-      state.commonCards[0] = {number: 3, orientation: CardOrientation.front};
-      state.commonCards[5] = {number: 3, orientation: CardOrientation.front};
-      state.personalCardsOfPlayer1[3] = {number: 3, orientation: CardOrientation.front};
+      state.commonCards[0] = {number: 3, orientation: CardOrientation.front, id: 0};
+      state.commonCards[5] = {number: 3, orientation: CardOrientation.front, id: 0};
+      state.personalCardsOfPlayer1[3] = {number: 3, orientation: CardOrientation.front, id: 0};
     },
     setScene(state: PloutosState, payload: Scene) {
       state.scene = payload;
     },
+    flipCard(state: PloutosState, id: number) {
+      state.flipCardNumber += 1;
+      const changeOrientation = (card: CardStructure) => {
+        card.orientation = card.orientation === CardOrientation.front ?  CardOrientation.back : CardOrientation.front;
+        return card;
+      };
+      const changeCardState = ( card: CardStructure ) => {
+        return card.id === id ? changeOrientation(card) : card;
+      };
+      state.commonCards = state.commonCards.map(changeCardState);
+      state.personalCardsOfPlayer1 = state.personalCardsOfPlayer1.map(changeCardState);
+      state.personalCardsOfPlayer2 = state.personalCardsOfPlayer2.map(changeCardState);
+    },
   },
 
   actions: {
+    confirmTrunFinish({ commit, state }) {
+      if ( state.flipCardNumber >= 3 ) {
+        commit('findCardsWithSameNumber');
+        commit('gainCards');
+        commit('incrementTurnCount');
+      }
+    },
   },
 
 });

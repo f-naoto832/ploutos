@@ -77,19 +77,21 @@ export default new Vuex.Store<PloutosState>({
     initPersonalCardsField(state) {
       // こういう値はどこかでconfigファイルとかに移したい
       const numberOfCard = 5;
-
-      let cards = Array<CardStructure>();
-      for (let i = 1; i < numberOfCard + 1; i++) {
-        const newCard: CardStructure = {
-          number: i,
-          orientation: CardOrientation.back,
-          id: state.generateCardId,
-        };
-        state.generateCardId += 1;
-        cards = cards.concat(newCard);
-      }
-      state.personalCardsOfPlayer1 = cards;
-      state.personalCardsOfPlayer2 = cards;
+      const initCardsField = (num: number) => {
+        let cards = Array<CardStructure>();
+        for (let i = 1; i < num + 1; i++) {
+          const newCard: CardStructure = {
+            number: i,
+            orientation: CardOrientation.back,
+            id: state.generateCardId,
+          };
+          state.generateCardId += 1;
+          cards = cards.concat(newCard);
+        }
+        return cards;
+      };
+      state.personalCardsOfPlayer1 = initCardsField(numberOfCard);
+      state.personalCardsOfPlayer2 = initCardsField(numberOfCard);
     },
     increment(state) {
       // ここで状態を更新する
@@ -98,6 +100,9 @@ export default new Vuex.Store<PloutosState>({
     },
     incrementTurnCount(state) {
       state.turnCount++;
+      
+    },
+    refreshCards(state) {
       state.flipCardNumber = 0;
       const changeOrientation = (card: CardStructure) => {
         card.orientation = card.orientation === CardOrientation.front ?  CardOrientation.back : CardOrientation.front;
@@ -107,8 +112,8 @@ export default new Vuex.Store<PloutosState>({
         return  card.orientation === CardOrientation.front ? changeOrientation(card) : card;
       };
       state.commonCards = state.commonCards.map(undoFlipCard);
-      state.gainCardsOfPlayer1 = state.gainCardsOfPlayer1.map(undoFlipCard);
-      state.gainCardsOfPlayer2 = state.gainCardsOfPlayer2.map(undoFlipCard);
+      state.personalCardsOfPlayer1 = state.personalCardsOfPlayer1.map(undoFlipCard);
+      state.personalCardsOfPlayer2 = state.personalCardsOfPlayer2.map(undoFlipCard);
     },
     gainCards(state) {
       if (state.turnPlayer === Player.player1) {
@@ -186,6 +191,7 @@ export default new Vuex.Store<PloutosState>({
       if ( state.flipCardNumber >= 3 ) {
         commit('findCardsWithSameNumber');
         commit('gainCards');
+        commit('refreshCards');
         commit('incrementTurnCount');
       }
     },

@@ -1,7 +1,7 @@
 <template>
   <div class="cardHolder">
     <template v-if="cardExist">
-      <Card v-bind:number="card.number" v-bind:orientation="card.orientation"/>
+      <Card v-bind:number="card.number" v-bind:orientation="card.orientation" v-bind:id="card.id"/>
     </template>
   </div>
 </template>

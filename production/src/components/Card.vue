@@ -18,22 +18,20 @@ import { CardOrientation, CardStructure } from '../store';
 export default class Card extends Vue implements CardStructure {
   @Prop() public number!: number;
   @Prop() public orientation!: CardOrientation;
+  @Prop() public id!: number;
 
-  // propは直接変更するとwarnが出るので、変数に格納
-  private dataOrientation = this.orientation;
 
   private get isFrontShow(): boolean {
-    return this.dataOrientation === CardOrientation.front;
+    return this.orientation === CardOrientation.front;
   }
   private get isBackShow(): boolean {
-    return this.dataOrientation === CardOrientation.back;
+    return this.orientation === CardOrientation.back;
   }
 
   private flipCards() {
-    if ( this.isFrontShow ) {
-      this.dataOrientation = CardOrientation.back;
-    } else if ( this.isBackShow ) {
-      this.dataOrientation = CardOrientation.front;
+    if ( this.orientation === CardOrientation.back ) {
+      this.$store.commit('flipCard', this.id);
+      this.$store.dispatch('confirmTurnFinish');
     }
   }
 }

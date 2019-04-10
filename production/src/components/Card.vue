@@ -29,9 +29,9 @@ export default class Card extends Vue implements CardStructure {
   }
 
   private flipCards() {
-    if( this.orientation === CardOrientation.back ) {
+    if ( this.orientation === CardOrientation.back ) {
       this.$store.commit('flipCard', this.id);
-      this.$store.dispatch('confirmTrunFinish');
+      this.$store.dispatch('confirmTurnFinish');
     }
   }
 }

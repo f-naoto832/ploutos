@@ -36,8 +36,8 @@ interface PloutosState {
   matchedCards: CardStructure[];
   isPrivilegeAvailable: boolean;
   scene: Scene;
-  flipCardNumber: number;
-  generateCardId: number;
+  numberOfFlippedCards: number;
+  nextUsableID: number;
 }
 
 export default new Vuex.Store<PloutosState>({
@@ -53,8 +53,8 @@ export default new Vuex.Store<PloutosState>({
     matchedCards: Array<CardStructure>(),
     isPrivilegeAvailable: true,
     scene: Scene.preparing,
-    flipCardNumber: 0,
-    generateCardId: 0,
+    numberOfFlippedCards: 0,
+    nextUsableID: 0,
   },
 
   mutations: {
@@ -67,9 +67,9 @@ export default new Vuex.Store<PloutosState>({
         const newCard: CardStructure = {
           number: i,
           orientation: CardOrientation.back,
-          id: state.generateCardId,
+          id: state.nextUsableID,
         };
-        state.generateCardId += 1;
+        state.nextUsableID += 1;
         cards = cards.concat(newCard);
       }
       state.commonCards = cards;
@@ -83,9 +83,9 @@ export default new Vuex.Store<PloutosState>({
           const newCard: CardStructure = {
             number: i,
             orientation: CardOrientation.back,
-            id: state.generateCardId,
+            id: state.nextUsableID,
           };
-          state.generateCardId += 1;
+          state.nextUsableID += 1;
           cards = cards.concat(newCard);
         }
         return cards;
@@ -100,20 +100,19 @@ export default new Vuex.Store<PloutosState>({
     },
     incrementTurnCount(state) {
       state.turnCount++;
-      
     },
     refreshCards(state) {
-      state.flipCardNumber = 0;
+      state.numberOfFlippedCards = 0;
       const changeOrientation = (card: CardStructure) => {
         card.orientation = card.orientation === CardOrientation.front ?  CardOrientation.back : CardOrientation.front;
         return card;
       };
-      const undoFlipCard = ( card: CardStructure ) => {
+      const undoFlippingCard = (card: CardStructure) => {
         return  card.orientation === CardOrientation.front ? changeOrientation(card) : card;
       };
-      state.commonCards = state.commonCards.map(undoFlipCard);
-      state.personalCardsOfPlayer1 = state.personalCardsOfPlayer1.map(undoFlipCard);
-      state.personalCardsOfPlayer2 = state.personalCardsOfPlayer2.map(undoFlipCard);
+      state.commonCards = state.commonCards.map(undoFlippingCard);
+      state.personalCardsOfPlayer1 = state.personalCardsOfPlayer1.map(undoFlippingCard);
+      state.personalCardsOfPlayer2 = state.personalCardsOfPlayer2.map(undoFlippingCard);
     },
     gainCards(state) {
       if (state.turnPlayer === Player.player1) {
@@ -172,7 +171,7 @@ export default new Vuex.Store<PloutosState>({
       state.scene = payload;
     },
     flipCard(state: PloutosState, id: number) {
-      state.flipCardNumber += 1;
+      state.numberOfFlippedCards += 1;
       const changeOrientation = (card: CardStructure) => {
         card.orientation = card.orientation === CardOrientation.front ?  CardOrientation.back : CardOrientation.front;
         return card;
@@ -187,8 +186,8 @@ export default new Vuex.Store<PloutosState>({
   },
 
   actions: {
-    confirmTrunFinish({ commit, state }) {
-      if ( state.flipCardNumber >= 3 ) {
+    confirmTurnFinish({ commit, state }) {
+      if ( state.numberOfFlippedCards >= 3 ) {
         commit('findCardsWithSameNumber');
         commit('gainCards');
         commit('refreshCards');

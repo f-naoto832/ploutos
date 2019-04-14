@@ -37,7 +37,6 @@ interface PloutosState {
   isPrivilegeAvailable: boolean;
   scene: Scene;
   numberOfFlippedCards: number;
-  nextUsableID: number;
 }
 
 const concatIfNonNull: (cards: CardStructure[], card: CardStructure | null) => CardStructure[] = (cards, card) => {
@@ -62,7 +61,6 @@ export default new Vuex.Store<PloutosState>({
     isPrivilegeAvailable: true,
     scene: Scene.preparing,
     numberOfFlippedCards: 0,
-    nextUsableID: 0,
   },
 
   mutations: {

@@ -64,10 +64,10 @@ export default new Vuex.Store<PloutosState>({
   },
 
   mutations: {
-    initCommonCardsField(state: PloutosState, payload: {cards: CardStructure[]}) {
+    initCommonCards(state: PloutosState, payload: {cards: CardStructure[]}) {
       state.commonCards = payload.cards;
     },
-    initPersonalCardsField(state: PloutosState, payload: {player: Player, cards: CardStructure[]}) {
+    initPersonalCards(state: PloutosState, payload: {player: Player, cards: CardStructure[]}) {
       switch (payload.player) {
         case Player.player1:
           state.personalCardsOfPlayer1 = payload.cards;
@@ -232,9 +232,9 @@ export default new Vuex.Store<PloutosState>({
         cardDeck.slice(
           numberOfCommonCards + nubmerOfPersonalCards,
           numberOfCommonCards + 2 * nubmerOfPersonalCards);
-      commit('initCommonCardsField', {cards: commonCards});
-      commit('initPersonalCardsField', {player: Player.player1, cards: player1Cards});
-      commit('initPersonalCardsField', {player: Player.player2, cards: player2Cards});
+      commit('initCommonCards', {cards: commonCards});
+      commit('initPersonalCards', {player: Player.player1, cards: player1Cards});
+      commit('initPersonalCards', {player: Player.player2, cards: player2Cards});
     },
     confirmTurnFinish({ commit, state }) {
       if ( state.numberOfFlippedCards >= 3 ) {

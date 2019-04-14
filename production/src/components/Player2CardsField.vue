@@ -1,7 +1,7 @@
 <template>
   <div class="personalCardsField">
     <div class="ownCards">
-      <template v-for="(card,key) in personalCardsOfPlayer2">
+      <template v-for="(card,key) in this.$store.state.personalCardsOfPlayer2">
         <CardHolder v-bind:card="card" v-bind:key="key"/>
       </template>
     </div>
@@ -24,13 +24,6 @@ const fieldCardNumber = 5;
 })
 export default class Player2CardsField extends Vue {
   private player: Player = Player.player2;
-  get personalCardsOfPlayer2(): Array<CardStructure | null> {
-    const personalCards: Array<CardStructure | null> = [ ...this.$store.state.personalCardsOfPlayer2];
-    for (let i = 0; i < fieldCardNumber - this.$store.state.personalCardsOfPlayer2.length; i++ ) {
-      personalCards.push(null);
-    }
-    return personalCards;
-  }
 }
 </script>
 

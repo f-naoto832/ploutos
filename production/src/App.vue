@@ -56,8 +56,7 @@ export default class App extends Vue {
     store.commit('incrementTurnCount');
   }
   private onClickDistributionCard() {
-    store.commit('initCommonCardsField');
-    store.commit('initPersonalCardsField');
+    store.dispatch('distributeCards');
   }
   // 動作確認用関数 1枚一致
   private gain1() {

@@ -1,7 +1,7 @@
 <template>
   <div class="commonCardsField">
     <div class="row">
-      <template v-for="(card,key) in commonCards">
+      <template v-for="(card,key) in this.$store.state.commonCards">
         <CardHolder v-bind:card="card" v-bind:key="key"/>
       </template>
     </div>
@@ -24,13 +24,6 @@ const fieldCardNumber = 10;
   },
 })
 export default class CommonCardsField extends Vue {
-  private get commonCards(): Array<CardStructure | null> {
-    const commonCards: Array<CardStructure | null> = [ ...this.$store.state.commonCards];
-    for (let i = 0; i < fieldCardNumber - this.$store.state.commonCards.length; i++ ) {
-      commonCards.push(null);
-    }
-    return commonCards;
-  }
 }
 </script>
 

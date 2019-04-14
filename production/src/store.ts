@@ -66,40 +66,20 @@ export default new Vuex.Store<PloutosState>({
   },
 
   mutations: {
-    initCommonCardsField(state) {
-      // こういう値はどこかでconfigファイルとかに移したい
-      const numberOfCard = 10;
-
-      let cards = Array<CardStructure>();
-      for (let i = 1; i < numberOfCard + 1; i++) {
-        const newCard: CardStructure = {
-          number: i,
-          orientation: CardOrientation.back,
-          id: state.nextUsableID,
-        };
-        state.nextUsableID += 1;
-        cards = cards.concat(newCard);
-      }
-      state.commonCards = cards;
+    initCommonCardsField(state: PloutosState, payload: {cards: CardStructure[]}) {
+      state.commonCards = payload.cards;
     },
-    initPersonalCardsField(state) {
-      // こういう値はどこかでconfigファイルとかに移したい
-      const numberOfCard = 5;
-      const initCardsField = (num: number) => {
-        let cards = Array<CardStructure>();
-        for (let i = 1; i < num + 1; i++) {
-          const newCard: CardStructure = {
-            number: i,
-            orientation: CardOrientation.back,
-            id: state.nextUsableID,
-          };
-          state.nextUsableID += 1;
-          cards = cards.concat(newCard);
-        }
-        return cards;
-      };
-      state.personalCardsOfPlayer1 = initCardsField(numberOfCard);
-      state.personalCardsOfPlayer2 = initCardsField(numberOfCard);
+    initPersonalCardsField(state: PloutosState, payload: {player: Player, cards: CardStructure[]}) {
+      switch (payload.player) {
+        case Player.player1:
+          state.personalCardsOfPlayer1 = payload.cards;
+          break;
+        case Player.player2:
+          state.personalCardsOfPlayer2 = payload.cards;
+          break;
+        default:
+          break;
+      }
     },
     increment(state) {
       // ここで状態を更新する
@@ -213,6 +193,44 @@ export default new Vuex.Store<PloutosState>({
   },
 
   actions: {
+    distributeCards({commit, state}) {
+      const initCardDeck: (() => CardStructure[]) = () => {
+        let initialCardDeck: CardStructure[] = Array<CardStructure>();
+        for (let num = 1, nextUsableID = 0; num <= 5; num++) {
+          for (let duplicates = 0; duplicates < 4; duplicates++, nextUsableID++) {
+            const newCard: CardStructure = {
+              number: num,
+              orientation: CardOrientation.back,
+              id: nextUsableID,
+            };
+            initialCardDeck = initialCardDeck.concat(newCard);
+          }
+        }
+        return initialCardDeck;
+      };
+      const randomComparator: ((a: CardStructure, b: CardStructure) => number) = (a, b) => {
+        return Math.random() - 0.5;
+      };
+      const cardDeck: CardStructure[] = initCardDeck().sort(randomComparator);
+
+      const numberOfCommonCards: number = 10;
+      const nubmerOfPersonalCards: number = 5;
+      const commonCards: CardStructure[] =
+        cardDeck.slice(
+          0,
+          numberOfCommonCards);
+      const player1Cards: CardStructure[] =
+        cardDeck.slice(
+          numberOfCommonCards,
+          numberOfCommonCards + nubmerOfPersonalCards);
+      const player2Cards: CardStructure[] =
+        cardDeck.slice(
+          numberOfCommonCards + nubmerOfPersonalCards,
+          numberOfCommonCards + 2 * nubmerOfPersonalCards);
+      commit('initCommonCardsField', {cards: commonCards});
+      commit('initPersonalCardsField', {player: Player.player1, cards: player1Cards});
+      commit('initPersonalCardsField', {player: Player.player2, cards: player2Cards});
+    },
     confirmTurnFinish({ commit, state }) {
       if ( state.numberOfFlippedCards >= 3 ) {
         commit('findCardsWithSameNumber');

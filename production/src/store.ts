@@ -156,7 +156,7 @@ export default new Vuex.Store<PloutosState>({
         .sort((cards1, cards2) => cards2.length - cards1.length)
         [0];
       const matchingNumber = cardSet[0].number;
-      const removeMatchCards  = (card: CardStructure | null) => {
+      const removeIfMatched  = (card: CardStructure | null) => {
         if ( ( card === null )
           || ( card.number === matchingNumber && card.orientation === CardOrientation.front )  ) {
           return null;
@@ -166,13 +166,13 @@ export default new Vuex.Store<PloutosState>({
       };
       if (cardSet.length > 1) {
         state.commonCards = state.commonCards
-          .map(removeMatchCards);
+          .map(removeIfMatched);
         if (state.turnPlayer === Player.player1) {
           state.personalCardsOfPlayer1 = state.personalCardsOfPlayer1
-            .map(removeMatchCards);
+            .map(removeIfMatched);
         } else if (state.turnPlayer === Player.player2) {
           state.personalCardsOfPlayer2 = state.personalCardsOfPlayer2
-            .map(removeMatchCards);
+            .map(removeIfMatched);
         }
         state.matchedCards = cardSet;
       }

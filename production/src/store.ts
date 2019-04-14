@@ -26,9 +26,9 @@ export interface CardStructure {
 }
 
 interface PloutosState {
-  personalCardsOfPlayer1: CardStructure[];
-  personalCardsOfPlayer2: CardStructure[];
-  commonCards: CardStructure[];
+  personalCardsOfPlayer1: Array<CardStructure | null>;
+  personalCardsOfPlayer2: Array<CardStructure | null>;
+  commonCards: Array<CardStructure | null>;
   gainCardsOfPlayer1: CardStructure[];
   gainCardsOfPlayer2: CardStructure[];
   turnPlayer: Player;
@@ -40,12 +40,20 @@ interface PloutosState {
   nextUsableID: number;
 }
 
+const concatIfNonNull: (cards: CardStructure[], card: CardStructure | null) => CardStructure[] = (cards, card) => {
+  if ( card === null ) {
+    return cards;
+  } else {
+    return cards.concat([card]);
+  }
+};
+
 export default new Vuex.Store<PloutosState>({
 
   state: {
-    personalCardsOfPlayer1: Array<CardStructure>(),
-    personalCardsOfPlayer2: Array<CardStructure>(),
-    commonCards: Array<CardStructure>(),
+    personalCardsOfPlayer1: Array<CardStructure | null>(),
+    personalCardsOfPlayer2: Array<CardStructure | null>(),
+    commonCards: Array<CardStructure | null>(),
     gainCardsOfPlayer1: Array<CardStructure>(),
     gainCardsOfPlayer2: Array<CardStructure>(),
     turnPlayer: Player.player1,
@@ -110,9 +118,13 @@ export default new Vuex.Store<PloutosState>({
       const undoFlippingCard = (card: CardStructure) => {
         return  card.orientation === CardOrientation.front ? changeOrientation(card) : card;
       };
-      state.commonCards = state.commonCards.map(undoFlippingCard);
-      state.personalCardsOfPlayer1 = state.personalCardsOfPlayer1.map(undoFlippingCard);
-      state.personalCardsOfPlayer2 = state.personalCardsOfPlayer2.map(undoFlippingCard);
+      state.commonCards = state.commonCards.reduce(concatIfNonNull, Array<CardStructure>()).map(undoFlippingCard);
+      state.personalCardsOfPlayer1 = state.personalCardsOfPlayer1
+        .reduce(concatIfNonNull, Array<CardStructure>())
+        .map(undoFlippingCard);
+      state.personalCardsOfPlayer2 = state.personalCardsOfPlayer2
+        .reduce(concatIfNonNull, Array<CardStructure>())
+        .map(undoFlippingCard);
     },
     gainCards(state) {
       if (state.turnPlayer === Player.player1) {
@@ -123,10 +135,16 @@ export default new Vuex.Store<PloutosState>({
       state.matchedCards = [];
     },
     findCardsWithSameNumber(state) {
-      const openedCommonCards = state.commonCards.filter((card) => card.orientation === CardOrientation.front);
+      const openedCommonCards = state.commonCards
+        .reduce(concatIfNonNull, Array<CardStructure>())
+        .filter((card) => card.orientation === CardOrientation.front);
       const openedPersonalCards = state.turnPlayer === Player.player1
-        ? state.personalCardsOfPlayer1.filter((card) => card.orientation === CardOrientation.front)
-        : state.personalCardsOfPlayer2.filter((card) => card.orientation === CardOrientation.front);
+        ? state.personalCardsOfPlayer1
+          .reduce(concatIfNonNull, Array<CardStructure>())
+          .filter((card) => card.orientation === CardOrientation.front)
+        : state.personalCardsOfPlayer2
+          .reduce(concatIfNonNull, Array<CardStructure>())
+          .filter((card) => card.orientation === CardOrientation.front);
       const openedCards = openedCommonCards.concat(openedPersonalCards);
       const findCards = (withNumber: number, inCards: CardStructure[]) => {
         return inCards.filter((card) => card.number === withNumber);
@@ -138,12 +156,15 @@ export default new Vuex.Store<PloutosState>({
       const matchingNumber = cardSet[0].number;
       if (cardSet.length > 1) {
         state.commonCards = state.commonCards
+          .reduce(concatIfNonNull, Array<CardStructure>())
           .filter((card) => card.number !== matchingNumber || card.orientation !== CardOrientation.front);
         if (state.turnPlayer === Player.player1) {
           state.personalCardsOfPlayer1 = state.personalCardsOfPlayer1
+            .reduce(concatIfNonNull, Array<CardStructure>())
             .filter((card) => card.number !== matchingNumber || card.orientation !== CardOrientation.front);
         } else if (state.turnPlayer === Player.player2) {
           state.personalCardsOfPlayer2 = state.personalCardsOfPlayer2
+            .reduce(concatIfNonNull, Array<CardStructure>())
             .filter((card) => card.number !== matchingNumber || card.orientation !== CardOrientation.front);
         }
         state.matchedCards = cardSet;
@@ -179,9 +200,15 @@ export default new Vuex.Store<PloutosState>({
       const changeCardState = ( card: CardStructure ) => {
         return card.id === id ? changeOrientation(card) : card;
       };
-      state.commonCards = state.commonCards.map(changeCardState);
-      state.personalCardsOfPlayer1 = state.personalCardsOfPlayer1.map(changeCardState);
-      state.personalCardsOfPlayer2 = state.personalCardsOfPlayer2.map(changeCardState);
+      state.commonCards = state.commonCards
+        .reduce(concatIfNonNull, Array<CardStructure>())
+        .map(changeCardState);
+      state.personalCardsOfPlayer1 = state.personalCardsOfPlayer1
+        .reduce(concatIfNonNull, Array<CardStructure>())
+        .map(changeCardState);
+      state.personalCardsOfPlayer2 = state.personalCardsOfPlayer2
+        .reduce(concatIfNonNull, Array<CardStructure>())
+        .map(changeCardState);
     },
   },
 

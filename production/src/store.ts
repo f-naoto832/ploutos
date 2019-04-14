@@ -121,7 +121,8 @@ export default new Vuex.Store<PloutosState>({
         }
         return  card.orientation === CardOrientation.front ? changeOrientation(card) : card;
       };
-      state.commonCards = state.commonCards.reduce(concatIfNonNull, Array<CardStructure>()).map(undoFlippingCard);
+      state.commonCards = state.commonCards
+        .map(undoFlippingCard);
       state.personalCardsOfPlayer1 = state.personalCardsOfPlayer1
         .map(undoFlippingCard);
       state.personalCardsOfPlayer2 = state.personalCardsOfPlayer2

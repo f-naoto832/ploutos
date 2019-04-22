@@ -251,7 +251,7 @@ export default new Vuex.Store<PloutosState>({
     flipCardIfFulfillCondition({ commit, state }, id: number) {
       const countFrontCards = ( accumulator: number, card: CardStructure | null) => {
         if ( card === null) {
-          return 0;
+          return accumulator;
         }
         return card.orientation === CardOrientation.front ? (accumulator + 1) : accumulator;
       };

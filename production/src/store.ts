@@ -248,32 +248,31 @@ export default new Vuex.Store<PloutosState>({
         commit('incrementTurnCount');
       }
     },
-    flipCardIfFulfillCondition({ commit, state }, id: number) {
-      const countFrontCards = ( accumulator: number, card: CardStructure | null) => {
-        if ( card === null) {
+    flipCardIfFulfillCondition({commit, state}, id: number) {
+      const countFrontCards = (accumulator: number, card: CardStructure | null) => {
+        if (card === null) {
           return accumulator;
         }
         return card.orientation === CardOrientation.front ? (accumulator + 1) : accumulator;
       };
-      const findCardById = ( card: CardStructure | null ) => {
-        if ( card === null) {
+      const isContainSameCardId = (card: CardStructure | null) => {
+        if (card === null) {
           return false;
         }
         return card.id === id;
       };
       const turnPlayerCards = state.turnPlayer === Player.player1
-      ? state.personalCardsOfPlayer1 : state.personalCardsOfPlayer2;
+        ? state.personalCardsOfPlayer1 : state.personalCardsOfPlayer2;
       const enemyPlayerCards = state.turnPlayer === Player.player1
-      ? state.personalCardsOfPlayer2 : state.personalCardsOfPlayer1;
+        ? state.personalCardsOfPlayer2 : state.personalCardsOfPlayer1;
       const commonFrontCardsNum: number = state.commonCards.reduce(countFrontCards, 0);
       const personalFrontCardsNum: number = turnPlayerCards.reduce(countFrontCards, 0);
-      const cardField = state.commonCards.filter(findCardById).length > 0 ? Field.common : Field.personal;
-      if ( enemyPlayerCards.filter(findCardById).length > 0 ) {
+      const cardField = state.commonCards.filter(isContainSameCardId).length > 0 ? Field.common : Field.personal;
+      if (enemyPlayerCards.filter(isContainSameCardId).length > 0) {
         return;
       }
-      // 各Fieldで１枚以上を読み変えると各Field２枚までしかめくれない
-      if ( ( cardField === Field.common && commonFrontCardsNum < 2 ) ||
-      ( cardField === Field.personal && personalFrontCardsNum < 2 ) ) {
+      if ((cardField === Field.common && commonFrontCardsNum < 2)
+        || (cardField === Field.personal && personalFrontCardsNum < 2)) {
         commit('flipCard', id);
       }
     },

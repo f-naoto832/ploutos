@@ -255,7 +255,7 @@ export default new Vuex.Store<PloutosState>({
         }
         return card.orientation === CardOrientation.front ? (accumulator + 1) : accumulator;
       };
-      const isContainSameCardId = (card: CardStructure | null) => {
+      const isSelected = (card: CardStructure | null) => {
         if (card === null) {
           return false;
         }
@@ -267,8 +267,8 @@ export default new Vuex.Store<PloutosState>({
         ? state.personalCardsOfPlayer2 : state.personalCardsOfPlayer1;
       const commonFrontCardsNum: number = state.commonCards.reduce(countFrontCards, 0);
       const personalFrontCardsNum: number = turnPlayerCards.reduce(countFrontCards, 0);
-      const cardField = state.commonCards.filter(isContainSameCardId).length > 0 ? Field.common : Field.personal;
-      if (enemyPlayerCards.filter(isContainSameCardId).length > 0) {
+      const cardField = state.commonCards.filter(isSelected).length > 0 ? Field.common : Field.personal;
+      if (enemyPlayerCards.filter(isSelected).length > 0) {
         return;
       }
       if ((cardField === Field.common && commonFrontCardsNum < 2)

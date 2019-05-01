@@ -21,7 +21,7 @@ export default class Card extends Vue implements CardStructure {
   @Prop() public orientation!: CardOrientation;
   @Prop() public id!: number;
 
-  private get getImagePath(): string {
+  private get getImagePath(): any {
     return require('../assets/card-front-' + this.number + '.jpg');
   }
 

@@ -1,8 +1,7 @@
 <template>
   <div class="card">
     <div id="card-front" v-if="isFrontShow" v-on:click="flipCards">
-      <h1>{{ number }}</h1>
-      <img id="card-design" src="../assets/card-front.jpg">
+      <img id="card-design" :src="getImagePath">
     </div>
     <div id="card-back" v-if="isBackShow" v-on:click="flipCards">
       <img id="card-design" src="../assets/card-back.jpg">
@@ -14,12 +13,17 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { CardOrientation, CardStructure } from '../store';
 
+declare function require(x: string): any;
+
 @Component
 export default class Card extends Vue implements CardStructure {
   @Prop() public number!: number;
   @Prop() public orientation!: CardOrientation;
   @Prop() public id!: number;
 
+  private get getImagePath(): any {
+    return require('../assets/card-front-' + this.number + '.jpg');
+  }
 
   private get isFrontShow(): boolean {
     return this.orientation === CardOrientation.front;
@@ -48,10 +52,7 @@ export default class Card extends Vue implements CardStructure {
   transition: all 0.2s ease;
   border: 3px solid #176123;
 }
-.card h1 {
-  position: absolute;
-  margin: 0.2rem;
-}
+
 img {
   width:auto;
   height:auto;

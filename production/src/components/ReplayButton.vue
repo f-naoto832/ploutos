@@ -9,8 +9,7 @@ import store, { Scene } from '../store';
 @Component
 export default class ReplayButton extends Vue {
   private onClickPlayButton() {
-    store.commit('setScene', Scene.playing);
-    store.dispatch('distributeCards');
+    store.dispatch('startNewGame');
   }
 }
 </script>

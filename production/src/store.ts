@@ -91,6 +91,16 @@ export default new Vuex.Store<PloutosState>({
     incrementTurnCount(state) {
       state.turnCount++;
     },
+    incrementCommonCardsNumber(state: PloutosState) {
+      state.commonCards = state.commonCards.map((card) => {
+        if (card === null) {
+          return null;
+        } else {
+          card.number = card.number % 5 + 1;
+          return card;
+        }
+      });
+    },
     refreshCards(state) {
       state.numberOfFlippedCards = 0;
       const changeOrientation = (card: CardStructure) => {
@@ -253,6 +263,7 @@ export default new Vuex.Store<PloutosState>({
         commit('setTurnPlayer', {player: nextPlayer});
         if (isEveryPlayerFinished) {
           commit('incrementTurnCount');
+          commit('incrementCommonCardsNumber');
         }
       }
     },

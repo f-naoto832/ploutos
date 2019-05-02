@@ -83,6 +83,22 @@ export default new Vuex.Store<PloutosState>({
           break;
       }
     },
+    resetGainCards(state: PloutosState) {
+      state.gainCardsOfPlayer1 = [];
+      state.gainCardsOfPlayer2 = [];
+    },
+    resetTurnCount(state: PloutosState) {
+      state.turnCount = 0;
+    },
+    resetMatchedCards(state: PloutosState) {
+      state.matchedCards = [];
+    },
+    setPrivilege(state: PloutosState, payload: {available: boolean}) {
+      state.isPrivilegeAvailable = payload.available;
+    },
+    setNumberOfFlippedCards(state: PloutosState, payload: {number: number}) {
+      state.numberOfFlippedCards = payload.number;
+    },
     increment(state) {
       // ここで状態を更新する
       // state.xxx = yyy;
@@ -265,6 +281,17 @@ export default new Vuex.Store<PloutosState>({
           commit('incrementTurnCount');
           commit('incrementCommonCardsNumber');
         }
+
+        const isNonNull = (card: CardStructure | null): boolean => {
+          return card !== null;
+        };
+        const isGameOver: boolean =
+          state.personalCardsOfPlayer1.filter(isNonNull).length === 0 ||
+          state.personalCardsOfPlayer2.filter(isNonNull).length === 0 ||
+          state.commonCards.filter(isNonNull).length === 0;
+        if (isGameOver) {
+          commit('setScene', Scene.finish);
+        }
       }
     },
     flipCardIfFulfillCondition({commit, state}, id: number) {
@@ -294,6 +321,16 @@ export default new Vuex.Store<PloutosState>({
         || (cardField === Field.personal && personalFrontCardsNum < 2)) {
         commit('flipCard', id);
       }
+    },
+    startNewGame({commit, state}) {
+      commit('setScene', Scene.playing);
+      commit('setTurnPlayer', {player: Player.player1});
+      commit('resetGainCards');
+      commit('resetTurnCount');
+      commit('resetMatchedCards');
+      commit('setPrivilege', {available: true});
+      commit('setNumberOfFlippedCards', {number: 0});
+      this.dispatch('distributeCards');
     },
   },
 });

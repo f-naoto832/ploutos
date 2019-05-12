@@ -1,13 +1,8 @@
 <template>
   <div id="app">
     <Menu v-if="shouldMenuBeShown"></Menu>
-    <GameField/>
-    <div id="debug">
-      <button v-on:click="onClickNext">Next(ターン経過の動作確認用ボタン)</button>
-      <button v-on:click="gain1">ペアなし(要dist)</button>
-      <button v-on:click="gain2">ペア(要dist)</button>
-      <button v-on:click="gain3">トリプル(要dist)</button>
-      <button v-on:click="onClickDistributionCard">distribution(共用フィールドの動作確認)</button>
+    <GameField v-if="isSenePlaying"></GameField>
+    <div id="debug" v-if="isSenePlaying">
       <button v-on:click="gameover">ゲームオーバー</button>
     </div>
   </div>
@@ -35,6 +30,9 @@ import { CardOrientation, Scene } from './store';
 export default class App extends Vue {
   private get shouldMenuBeShown() {
     return this.$store.state.scene !== Scene.playing;
+  }
+  private get isSenePlaying() {
+    return this.$store.state.scene === Scene.playing;
   }
 // 確認用
   private orientation: CardOrientation = CardOrientation.back;

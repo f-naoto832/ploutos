@@ -29,10 +29,9 @@ export default class CardHolder extends Vue {
 .cardHolder {
   position: relative;
   display: inline-block;
-  width: 8rem;
-  height: 12rem;
-  margin: 0.2rem;
+  width: 6rem;
+  height: 9rem;
+  margin: 0.4rem;
   transition: all 0.2s ease;
-  border: 3px solid #615617;
 }
 </style>

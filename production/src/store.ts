@@ -270,7 +270,19 @@ export default new Vuex.Store<PloutosState>({
       commit('initPersonalCards', {player: Player.player2, cards: player2Cards});
     },
     confirmTurnFinish({ commit, state }) {
-      if ( state.numberOfFlippedCards >= 3 ) {
+      const countNonNullCards = (accumulator: number, card: CardStructure | null) => {
+        if (card === null) {
+          return accumulator;
+        }
+        return accumulator + 1;
+      };
+      const turnPlayerCards: Array<CardStructure | null> = state.turnPlayer === Player.player1
+        ? state.personalCardsOfPlayer1 : state.personalCardsOfPlayer2;
+      const numberOfCommonCards: number = state.commonCards.reduce(countNonNullCards, 0);
+      const numberOfTurnPlayerCards: number = turnPlayerCards.reduce(countNonNullCards, 0);
+
+      if (state.numberOfFlippedCards >= 3
+          || state.numberOfFlippedCards === numberOfCommonCards + numberOfTurnPlayerCards) {
         setTimeout(() => {
           const nextPlayer: Player = state.turnPlayer === Player.player1 ? Player.player2 : Player.player1;
           const isEveryPlayerFinished: boolean = nextPlayer === Player.player1;

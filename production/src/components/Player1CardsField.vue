@@ -1,10 +1,8 @@
 <template>
-  <div class="personalCardsField">
-    <div class="row">
-      <template v-for="(card,key) in this.$store.state.personalCardsOfPlayer1">
-        <CardHolder v-bind:card="card" v-bind:key="key"/>
-      </template>
-    </div>
+  <div v-bind:class="[color]" class="personalCardsField">
+    <template v-for="(card,key) in this.$store.state.personalCardsOfPlayer1">
+      <CardHolder v-bind:card="card" v-bind:key="key"/>
+    </template>
   </div>
 </template>
 
@@ -24,6 +22,9 @@ const fieldCardNumber = 5;
 })
 export default class Player1CardsField extends Vue {
   private player: Player = Player.player1;
+  private get color() {
+    return this.$store.state.turnPlayer === this.player ? 'yellow' : 'unset';
+  }
 }
 </script>
 
@@ -31,13 +32,15 @@ export default class Player1CardsField extends Vue {
 <style scoped>
 .personalCardsField {
   position: relative;
-  width: 80%;
-  margin-left: 20%;
-  /* background-color: lightgoldenrodyellow; */
-}
-.row {
-  position: relative;
   width: 40rem;
-  text-align: right;
+  margin-left: 20%;
+  border: 3px solid #ffffff;
+  border-radius: 20px 20px 20px 20px / 20px 20px 20px 20px;
+}
+.yellow {
+  background-color: lightgoldenrodyellow;
+}
+.unset {
+  background-color: unset;
 }
 </style>

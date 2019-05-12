@@ -39,6 +39,8 @@ export default class CommonCardsField extends Vue {
   margin-top: 3%;
   margin-bottom: 3%;
   width: 40rem;
-  text-align: right;
+  background-color: lightgoldenrodyellow;
+  border: 3px solid #ffffff;
+  border-radius: 20px 20px 20px 20px / 20px 20px 20px 20px;
 }
 </style>

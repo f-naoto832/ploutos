@@ -5,7 +5,6 @@
         <CardHolder v-bind:card="card" v-bind:key="key"/>
       </template>
     </div>
-    
   </div>
 </template>
 
@@ -31,14 +30,15 @@ export default class CommonCardsField extends Vue {
 <style scoped>
 .commonCardsField {
   position: relative;
-  width: 60%;
+  width: 80%;
   margin-left: 20%;
-  text-align: center;
-  background-color: lightgoldenrodyellow;
+  /* background-color: lightgoldenrodyellow; */
 }
 .row {
   position: relative;
-  width: 50rem;
-  text-align: center;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  width: 40rem;
+  text-align: right;
 }
 </style>

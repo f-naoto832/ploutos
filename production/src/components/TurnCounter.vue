@@ -14,13 +14,17 @@ export default class TurnCounter extends Vue { }
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .turnCounter {
-    font-size: 6rem;
-    width: 10rem;
-    height: 10rem;
-    line-height: 10rem;
-    text-align: center;
-    background-size: contain;
-    background-image: url("../assets/clock.jpg");
+  position: absolute;
+  margin-block-start: 6rem;
+  font-size: 5rem;
+  width: 8rem;
+  height: 8rem;
+  line-height: 8rem;
+  text-align: center;
+  background-size: contain;
+  background-image: url("../assets/clock.jpg");
+  border: 3px solid #ffffff;
+  border-radius: 20px 20px 20px 20px / 20px 20px 20px 20px;
 }
 </style>
 

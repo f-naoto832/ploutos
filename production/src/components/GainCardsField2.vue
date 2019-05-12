@@ -1,6 +1,7 @@
 <template>
   <div class="gainCardsField">
-    <h1>{{ this.$store.state.gainCardsOfPlayer2.length }} points</h1>
+    <h1>{{ this.$store.state.gainCardsOfPlayer2.length }}</h1>
+    <h1>point</h1>
   </div>
 </template>
 
@@ -17,11 +18,12 @@ export default class GainCardsField2 extends Vue {
 <style scoped>
 .gainCardsField {
   position: absolute;
-  width: 9rem;
-  height: 13rem;
-  margin-left: 3%;
+  width: 8rem;
+  height: 9rem;
   text-align: center;
   font-size: 1rem;
-  background-color: mediumseagreen;
+  background-color: lightgreen;
+  border: 3px solid #ffffff;
+  border-radius: 20px 20px 20px 20px / 20px 20px 20px 20px;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="personalCardsField">
-    <div class="ownCards">
+    <div class="row">
       <template v-for="(card,key) in this.$store.state.personalCardsOfPlayer1">
         <CardHolder v-bind:card="card" v-bind:key="key"/>
       </template>
@@ -31,24 +31,13 @@ export default class Player1CardsField extends Vue {
 <style scoped>
 .personalCardsField {
   position: relative;
-  width: 60%;
-  height: 13rem;
+  width: 80%;
   margin-left: 20%;
-  text-align: center;
+  /* background-color: lightgoldenrodyellow; */
 }
-.gainCards {
-  position: absolute;
-  width: 10rem;
-  height: 13rem;
-  text-align: center;
-  background-color: lightgoldenrodyellow;
-}
-.ownCards {
-  position: absolute;
-  width: 50rem;
-  height: 13rem;
-  margin-left: 20%;
-  text-align: center;
-  background-color: lightgoldenrodyellow;
+.row {
+  position: relative;
+  width: 40rem;
+  text-align: right;
 }
 </style>

@@ -271,27 +271,29 @@ export default new Vuex.Store<PloutosState>({
     },
     confirmTurnFinish({ commit, state }) {
       if ( state.numberOfFlippedCards >= 3 ) {
-        const nextPlayer: Player = state.turnPlayer === Player.player1 ? Player.player2 : Player.player1;
-        const isEveryPlayerFinished: boolean = nextPlayer === Player.player1;
-        commit('findCardsWithSameNumber');
-        commit('gainCards');
-        commit('refreshCards');
-        commit('setTurnPlayer', {player: nextPlayer});
-        if (isEveryPlayerFinished) {
-          commit('incrementTurnCount');
-          commit('incrementCommonCardsNumber');
-        }
+        setTimeout(() => {
+          const nextPlayer: Player = state.turnPlayer === Player.player1 ? Player.player2 : Player.player1;
+          const isEveryPlayerFinished: boolean = nextPlayer === Player.player1;
+          commit('findCardsWithSameNumber');
+          commit('gainCards');
+          commit('refreshCards');
+          commit('setTurnPlayer', {player: nextPlayer});
+          if (isEveryPlayerFinished) {
+            commit('incrementTurnCount');
+            commit('incrementCommonCardsNumber');
+          }
 
-        const isNonNull = (card: CardStructure | null): boolean => {
-          return card !== null;
-        };
-        const isGameOver: boolean =
-          state.personalCardsOfPlayer1.filter(isNonNull).length === 0 ||
-          state.personalCardsOfPlayer2.filter(isNonNull).length === 0 ||
-          state.commonCards.filter(isNonNull).length === 0;
-        if (isGameOver) {
-          commit('setScene', Scene.finish);
-        }
+          const isNonNull = (card: CardStructure | null): boolean => {
+            return card !== null;
+          };
+          const isGameOver: boolean =
+            state.personalCardsOfPlayer1.filter(isNonNull).length === 0 ||
+            state.personalCardsOfPlayer2.filter(isNonNull).length === 0 ||
+            state.commonCards.filter(isNonNull).length === 0;
+          if (isGameOver) {
+            commit('setScene', Scene.finish);
+          }
+        }, 800);
       }
     },
     flipCardIfFulfillCondition({commit, state}, id: number) {

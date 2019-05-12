@@ -2,9 +2,6 @@
   <div id="app">
     <Menu v-if="shouldMenuBeShown"></Menu>
     <GameField v-if="isSenePlaying"></GameField>
-    <div id="debug" v-if="isSenePlaying">
-      <button v-on:click="gameover">ゲームオーバー</button>
-    </div>
   </div>
 </template>
 
@@ -34,43 +31,6 @@ export default class App extends Vue {
   private get isSenePlaying() {
     return this.$store.state.scene === Scene.playing;
   }
-// 確認用
-  private orientation: CardOrientation = CardOrientation.back;
-  // 動作確認用関数
-  private onClickNext() {
-    store.commit('incrementTurnCount');
-  }
-  private onClickDistributionCard() {
-    store.dispatch('distributeCards');
-  }
-  // 動作確認用関数 1枚一致
-  private gain1() {
-    store.commit('makeAloneCards');
-    setTimeout(() => {
-      store.commit('findCardsWithSameNumber');
-      store.commit('gainCards');
-    }, 500);
-  }
-  // 動作確認用関数 2枚一致
-  private gain2() {
-    store.commit('makePairCards');
-    setTimeout(() => {
-      store.commit('findCardsWithSameNumber');
-      store.commit('gainCards');
-    }, 500);
-  }
-  // 動作確認用関数 3枚一致
-  private gain3() {
-    store.commit('makeTripleCards');
-    setTimeout(() => {
-      store.commit('findCardsWithSameNumber');
-      store.commit('gainCards');
-    }, 500);
-  }
-  // 動作確認用（Sceneを変更するしてリプレイの画面を表示させるだけ）
-  private gameover() {
-    store.commit('setScene', Scene.finish);
-  }
 }
 </script>
 
@@ -82,8 +42,5 @@ export default class App extends Vue {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-}
-#debug {
-  margin: 60px;
 }
 </style>

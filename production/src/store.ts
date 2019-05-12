@@ -99,11 +99,6 @@ export default new Vuex.Store<PloutosState>({
     setNumberOfFlippedCards(state: PloutosState, payload: {number: number}) {
       state.numberOfFlippedCards = payload.number;
     },
-    increment(state) {
-      // ここで状態を更新する
-      // state.xxx = yyy;
-      const a = 1;
-    },
     incrementTurnCount(state) {
       state.turnCount++;
     },
@@ -184,24 +179,6 @@ export default new Vuex.Store<PloutosState>({
         }
         state.matchedCards = cardSet;
       }
-    },
-    // 動作確認用 1枚一致にする
-    makeAloneCards(state) {
-      state.commonCards[0] = {number: 1, orientation: CardOrientation.front, id: 0};
-      state.commonCards[5] = {number: 5, orientation: CardOrientation.front, id: 0};
-      state.personalCardsOfPlayer1[3] = {number: 3, orientation: CardOrientation.front, id: 0};
-    },
-    // 動作確認用 2枚一致にする
-    makePairCards(state) {
-      state.commonCards[0] = {number: 3, orientation: CardOrientation.front, id: 0};
-      state.commonCards[5] = {number: 5, orientation: CardOrientation.front, id: 0};
-      state.personalCardsOfPlayer1[3] = {number: 3, orientation: CardOrientation.front, id: 0};
-    },
-    // 動作確認用 3枚一致にする
-    makeTripleCards(state) {
-      state.commonCards[0] = {number: 3, orientation: CardOrientation.front, id: 0};
-      state.commonCards[5] = {number: 3, orientation: CardOrientation.front, id: 0};
-      state.personalCardsOfPlayer1[3] = {number: 3, orientation: CardOrientation.front, id: 0};
     },
     setScene(state: PloutosState, payload: Scene) {
       state.scene = payload;

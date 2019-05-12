@@ -1,18 +1,10 @@
 <template>
   <div id="app">
     <Menu v-if="shouldMenuBeShown"></Menu>
-    <GainCardsField1/>
-    <player1CardsField/>
-    <CommonCardsField/>
-    <GainCardsField2/>
-    <player2CardsField/>
-    <TurnCounter />
-    <button v-on:click="onClickNext">Next(ターン経過の動作確認用ボタン)</button>
-    <button v-on:click="gain1">ペアなし(要dist)</button>
-    <button v-on:click="gain2">ペア(要dist)</button>
-    <button v-on:click="gain3">トリプル(要dist)</button>
-    <button v-on:click="onClickDistributionCard">distribution(共用フィールドの動作確認)</button>
-    <button v-on:click="gameover">ゲームオーバー</button>
+    <GameField v-if="isSenePlaying"></GameField>
+    <div id="debug" v-if="isSenePlaying">
+      <button v-on:click="gameover">ゲームオーバー</button>
+    </div>
   </div>
 </template>
 
@@ -20,13 +12,8 @@
 import { Component, Vue } from 'vue-property-decorator';
 import store from './store';
 import Menu from './components/Menu.vue';
-import TurnCounter from './components/TurnCounter.vue';
 import Card from './components/Card.vue';
-import Player1CardsField from './components/Player1CardsField.vue';
-import Player2CardsField from './components/Player2CardsField.vue';
-import GainCardsField1 from './components/GainCardsField1.vue';
-import GainCardsField2 from './components/GainCardsField2.vue';
-import CommonCardsField from './components/CommonCardsField.vue';
+import GameField from './components/GameField.vue';
 import PlayButton from './components/PlayButton.vue';
 import ReplayButton from './components/ReplayButton.vue';
 import { CardOrientation, Scene } from './store';
@@ -34,20 +21,18 @@ import { CardOrientation, Scene } from './store';
 @Component({
   components: {
     Menu,
-    TurnCounter,
     Card,
-    Player1CardsField,
-    Player2CardsField,
-    GainCardsField1,
-    GainCardsField2,
+    GameField,
     PlayButton,
     ReplayButton,
-    CommonCardsField,
   },
 })
 export default class App extends Vue {
   private get shouldMenuBeShown() {
     return this.$store.state.scene !== Scene.playing;
+  }
+  private get isSenePlaying() {
+    return this.$store.state.scene === Scene.playing;
   }
 // 確認用
   private orientation: CardOrientation = CardOrientation.back;
@@ -97,5 +82,8 @@ export default class App extends Vue {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+#debug {
+  margin: 60px;
 }
 </style>

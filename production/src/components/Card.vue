@@ -46,11 +46,11 @@ export default class Card extends Vue implements CardStructure {
 .card {
   position: relative;
   display: inline-block;
-  width: 8rem;
-  height: 12rem;
-  margin: 0.2rem;
+  width: 100%;
+  height: 100%;
   transition: all 0.2s ease;
   border: 3px solid #176123;
+  border-radius: 5px 5px 5px 5px / 5px 5px 5px 5px;
 }
 
 img {
